@@ -78,14 +78,14 @@ class Main {
 }
 ```
 ## 결과
-![ThreadResult.PNG](/files/182) 
+![ThreadResult.PNG](/files/187) 
 ## 문제점
 여러 멀티 쓰레드가 공유객체인 SharedOjbect에 동시에 접근하는 경우 동시성문제 발생.
 첫 번째 동작할 때와 두 번째 동작할 때의 자원 상태가 변하기 때문에 문제가 발생합니다.
 ## 해결 방법
 .join()을 활용해 하나의 멀티스레드가 작업을 마칠 때 까지 다른 멀티스레드는 공유 자원(메서드, 변수)에 접근하지 못하게 할 수 있습니다.
 하지만 하나의 자원에만 접근하는 멀티스레드에 join을 사용한다면 결국 하나의 스레드만 작동하게 되는 것이므로 병렬성의 이점이 없습니다.
-![787-20232-22-1025-12.png](/files/197)
+
 
 
 
@@ -152,7 +152,7 @@ class Main {
 }
 ```
 ## 결과
-![RunnableResult.PNG](/files/183) 
+![RunnableResult.PNG](/files/188) 
 ## 문제점
 Thread와 마찬가지로 동시성 문제 발생.
 ## 해결 방법
@@ -172,11 +172,11 @@ Synchronized 사용
 이후 임계영역의 코드를 모두 실행하게 되면 unlock 상태가 되어 대기하고 있던 다른 스레드가 이 임계영역에 다시 접근하여 다시 lock을 걸며 사용합니다.
 
 1. 메서드에 synchronized 설정
-![SynchronizedMethod.PNG](/files/184) 
+![SynchronizedMethod.PNG](/files/189)
 2. 코드블럭에 synchronized 설정
-![SynchronizedCodeBlock.PNG](/files/185) 
+![SynchronizedCodeBlock.PNG](/files/191) 
 
 ## 결과
-![SynchronizedRunnableResult.PNG](/files/186) 
+![SynchronizedRunnableResult.PNG](/files/192) 
 동시성 문제가 해결되었다.
  
