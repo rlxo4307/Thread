@@ -304,6 +304,49 @@ class MulThread2 implements Runnable {
 입금:4 | 1번 스레드
 ```
 
+### writeLock & readLock
+1. writeLock = 메모리에 값을 입력하기 위해 메모리에 접근을 못하게 거는 lock
+```javascript
+class SharedObject {
+    private int money = 0;
+    private Lock lock = new ReentrantLock();
+    public Lock getLock(){
+        return lock;
+    };
+    private ReentrantReadWriteLock readlock;
+    
+    public void add() {
+        useLock.writeLock().lock();
+        System.out.println("입금:" + ++money + " | 1번 스레드");
+        lock.unlock();
+    }
+    public void minus() {
+        useLock.writeLock().lock();
+        System.out.println("출금:" + --money + " | 2번 스레드");
+        lock.unlock();
+    }
+}
+```
+
+2. writelock에 readlock을 건다면?
+```javascript
+public void add() {
+        useLock.readLock().lock();
+        System.out.println("입금:" + ++money + " | 1번 스레드");
+        lock.unlock();
+    }
+```
+### 결과값
+```javascript
+Exception in thread "Thread-0" java.lang.NullPointerException
+	at ReentrantRunnable.SharedObject.add(SharedObject.java:15)
+	at ReentrantRunnable.MulThread1.run(SharedObject.java:35)
+	at java.lang.Thread.run(Thread.java:748)
+출금:-1 | 2번 스레드
+출금:-2 | 2번 스레드
+출금:-3 | 2번 스레드
+```
+
 # Singleton Parttern
 ## Singleton Pattern이란?
 같은 생성자가 여러 번 호출되더라도 처음 생성자 호출 시 생성된 하나의 동일한 인스턴스가 반복적으로 반환되는 패턴입니다.
