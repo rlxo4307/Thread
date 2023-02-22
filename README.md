@@ -214,13 +214,105 @@ Singleton singleton = Singleton.getInstance();
 
 ## 해결 방법
 ### 1. synchronized 메소드 선언
-![SingletonSynchronized.PNG](/files/203)
 synchronized 키워드를 사용하여 getInstance() 메소드를 동기화하면, 최초로 접근한 스레드가
 해당 메서드 호출을 종료할 때 까지 다른 스레드가 접근하지 못하게 lock을 겁니다.
+```javascript
+class Singleton {
+    private static Singleton myInstance = null;
 
+    private Singleton() {}
+
+    public static synchronized Singleton getInstance() {
+        if (myInstance == null) {
+            myInstance = new Singleton();
+        }
+
+        return myInstance;
+    }
+}
+```
 여러 스레드가 동시에 접근할 때 발생하는 문제는 해결할 수 있지만
 getInstatnce() 메서드를 호출할 때 마다 lock이 걸려 성능 저하가 발생하는 단점이 있습니다.
 
 ### 2. DCL(Double Checked Locking)
+synchronized 메소드 선언 방식의 단점을 보완하여, 생성된 인스턴스가 존재하지 않을 때만 lock을 거는 방법입니다.
+```javascript
+class Singleton {
+    private static Singleton myInstance = null;
 
+    private Singleton() {}
 
+    public static Singleton getInstance() {
+        if (myInstance == null) {
+            synchronized (Singleton.class) {
+                if (myInstance == null) {
+                    myInstance = new Singleton();
+                }
+            }
+        }
+
+        return myInstance;
+    }
+}
+```
+ 
+### 3. DCL 방식에 volatile 키워드 사용
+volatile 키워드를 myInstance 선언문에 붙여서 사용하면, myInstance에 값을 할당하거나 수정할 때
+메인 메모리에 바로 쓰게 됩니다.
+```javascript
+class SingletonVolatile {
+    private volatile static SingletonVolatile myInstance = null;
+    private SingletonVolatile() {}
+    private int money = 0;
+    synchronized void add(){
+        System.out.println("입금:"+ ++money + " | 1번 스레드");
+    }
+    synchronized void minus(){
+        System.out.println("출금:"+ --money + " | 2번 스레드");
+    }
+    public static SingletonVolatile getInstance() {
+        if (myInstance == null) {
+            synchronized (SingletonVolatile.class) {
+                if (myInstance == null) {
+                    myInstance = new SingletonVolatile();
+                }
+            }
+        }
+        return myInstance;
+    }
+}
+```
+ MyInstance의 값을 읽어 들이는 경우에도 CPU 캐시를 거치지 않고 메인 메모리로부터 읽어 들이게 강제하므로
+visibility 문제를 해결 할 수 있습니다.
+
+### 4. LazyHolder 방식
+위 세가지 방법은 런타임 시 필요한 인스턴스를 생성해서 할당하는 방식입니다.
+LazyHolder 방식은 최초 JVM이 Class Loader를 이용해서 class path 내에 있는 모든 class들을
+로드할 때 미리 인스턴스를 생성해주는 방식입니다.
+```javascript
+class SingletonLazyHolder {
+    private SingletonLazyHolder() {}
+    private int money = 0;
+    public static SingletonLazyHolder getInstance() {
+        return LazyHolder.INSTANCE;
+    }
+    private static class LazyHolder {
+        private static final SingletonLazyHolder INSTANCE = new SingletonLazyHolder();
+    }
+    public synchronized void add(){
+        System.out.println("입금:" + ++money + " | 1번 스레드");
+    }
+    public synchronized void minus(){
+        System.out.println("출금:" + --money + " | 2번 스레드");
+    }
+}
+```
+LazeHolder라는 Inner Class를 선언해 사용함으로써
+
+Singleton 클래스가 최초 로딩 단계에서 로드가 되더라도, LazyHolder 클래스에 대한 변수를
+가지고 있지 않아 함께 초기화되지 않는 점을 이용한 방법입니다.
+
+따라서 getInstance()가 호출될 때 LazyHolder 클래스가 로딩되며 인스턴스를 생성합니다.
+
+또한 class를 로드하고 초기화하는 단계에서는 thread safety가 보장되기 때문에 별도의
+synchronized, volatile 키워드 없이 동시성 문제를 해결할 수 있습니다.
