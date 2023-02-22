@@ -214,5 +214,13 @@ Singleton singleton = Singleton.getInstance();
 
 ### 해결 방법
 1. synchronized 메소드 선언
+![SingletonSynchronized.PNG](/files/203)
+synchronized 키워드를 사용하여 getInstance() 메소드를 동기화하면, 최초로 접근한 스레드가
+해당 메서드 호출을 종료할 때 까지 다른 스레드가 접근하지 못하게 lock을 겁니다.
+
+여러 스레드가 동시에 접근할 때 발생하는 문제는 해결할 수 있지만
+getInstatnce() 메서드를 호출할 때 마다 lock이 걸려 성능 저하가 발생하는 단점이 있습니다.
+
+2. DCL(Double Checked Locking)
 
 
