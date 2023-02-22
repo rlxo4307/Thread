@@ -170,7 +170,7 @@ Synchronized 사용
 이후 임계영역의 코드를 모두 실행하게 되면 unlock 상태가 되어 대기하고 있던 다른 스레드가 이 임계영역에 다시 접근하여 다시 lock을 걸며 사용합니다.
 
 1. 메서드에 synchronized 설정
-![SynchronizedMethod.PNG](/files/189)
+![SynchronizedMethod.PNG](/files/202) 
 2. 코드블럭에 synchronized 설정
 ![SynchronizedCodeBlock.PNG](/files/201) 
 
