@@ -191,6 +191,21 @@ synchronized 키워드 없이 명시적으로 ReentratLcok을 사용하는 Lock.
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+class Main {
+    public static void main(String[] args) throws InterruptedException {
+        SharedObject so = new SharedObject();
+
+        Runnable r1 = new MulThread1(so);
+        Runnable r2 = new MulThread2(so);
+        Thread t1 = new Thread(r1);
+        Thread t2 = new Thread(r2);
+
+        t1.start();
+        t2.start();
+
+    }
+}
+
 class SharedObject {
     private int money = 0;
     private Lock lock = new ReentrantLock();
