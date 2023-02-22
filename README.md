@@ -220,7 +220,7 @@ synchronized 키워드를 사용하여 getInstance() 메소드를 동기화하�
 class SingletonSyn {
     private static SingletonSyn myInstance = null;
 
-    private Singleton() {}
+    private SingletonSyn() {}
 
     public static synchronized SingletonSyn getInstance() {
         if (myInstance == null) {
@@ -240,7 +240,7 @@ synchronized 메소드 선언 방식의 단점을 보완하여, 생성된 인스
 class SingletonDCL {
     private static SingletonDCL myInstance = null;
 
-    private Singleton() {}
+    private SingletonDCL() {}
 
     public static SingletonDCL getInstance() {
         if (myInstance == null) {
