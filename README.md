@@ -217,14 +217,14 @@ Singleton singleton = Singleton.getInstance();
 synchronized 키워드를 사용하여 getInstance() 메소드를 동기화하면, 최초로 접근한 스레드가
 해당 메서드 호출을 종료할 때 까지 다른 스레드가 접근하지 못하게 lock을 겁니다.
 ```javascript
-class Singleton {
-    private static Singleton myInstance = null;
+class SingletonSyn {
+    private static SingletonSyn myInstance = null;
 
     private Singleton() {}
 
-    public static synchronized Singleton getInstance() {
+    public static synchronized SingletonSyn getInstance() {
         if (myInstance == null) {
-            myInstance = new Singleton();
+            myInstance = new SingletonSyn();
         }
 
         return myInstance;
@@ -237,16 +237,16 @@ getInstatnce() 메서드를 호출할 때 마다 lock이 걸려 성능 저하가
 ### 2. DCL(Double Checked Locking)
 synchronized 메소드 선언 방식의 단점을 보완하여, 생성된 인스턴스가 존재하지 않을 때만 lock을 거는 방법입니다.
 ```javascript
-class Singleton {
-    private static Singleton myInstance = null;
+class SingletonDCL {
+    private static SingletonDCL myInstance = null;
 
     private Singleton() {}
 
-    public static Singleton getInstance() {
+    public static SingletonDCL getInstance() {
         if (myInstance == null) {
-            synchronized (Singleton.class) {
+            synchronized (SingletonDCL.class) {
                 if (myInstance == null) {
-                    myInstance = new Singleton();
+                    myInstance = new SingletonDCL();
                 }
             }
         }
