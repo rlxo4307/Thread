@@ -330,22 +330,31 @@ class SharedObject {
 
 2. writelock에 readlock을 건다면?
 ```javascript
-public void add() {
+private ReentrantReadWriteLock useLock = new ReentrantReadWriteLock();
+    public Lock getLock(){
+        return lock;
+    };
+    public void add() {
         useLock.readLock().lock();
         System.out.println("입금:" + ++money + " | 1번 스레드");
-        lock.unlock();
+        useLock.readLock().unlock();
+    }
+    public void minus() {
+        useLock.writeLock().lock();
+        System.out.println("출금:" + --money + " | 2번 스레드");
+        useLock.writeLock().lock();
     }
 ```
 ### 결과값
 ```javascript
-Exception in thread "Thread-0" java.lang.NullPointerException
-	at ReentrantRunnable.SharedObject.add(SharedObject.java:15)
-	at ReentrantRunnable.MulThread1.run(SharedObject.java:35)
-	at java.lang.Thread.run(Thread.java:748)
-출금:-1 | 2번 스레드
-출금:-2 | 2번 스레드
-출금:-3 | 2번 스레드
+출금:-96 | 2번 스레드
+출금:-97 | 2번 스레드
+출금:-98 | 2번 스레드
+출금:-99 | 2번 스레드
+출금:-100 | 2번 스레드
 ```
+add() 메서드가 실행되지 않는다.
+readLock이 걸린 상태에서 메모리에 접근하려고 해서 다음 명령으로 진행되지 않는 상황인 거로 판단.
 
 # Singleton Parttern
 ## Singleton Pattern이란?
