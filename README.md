@@ -154,7 +154,7 @@ class Main {
 ## 문제점
 Thread와 마찬가지로 동시성 문제 발생.
 ## 해결 방법
-Synchronized 사용
+암시적 Lock(Synchronized), 명시적 Lock(ReentrantLock) 사용
 
 
 
@@ -164,7 +164,10 @@ Synchronized 사용
 공유데이터가 사용되어 동기화가 필요한 부분을 임계영역이라 부르며, 이 임계영역에 synchronized 키워드를 사용하여
 여러 스레드가 동시에 접근하는 것을 금지함으로써 동기화를 할 수 있습니다.
 
-### synchronized 사용방법
+Lock은 메서드, 변수에 각각 걸 수 있습니다.
+단, 변수에 lock을 걸기 위해선 해당 변수는 객체이어야 합니다.
+
+### synchronized (암시적 Lock)
 동기화가 필요한 메소드나 코드블럭 앞에 사용합니다.
 한 스레드가 synchronized 로 지정된 임계영역에 접근하면 lock이 걸림으로써 다른 스레드가 접근하지 못합니다.
 이후 임계영역의 코드를 모두 실행하게 되면 unlock 상태가 되어 대기하고 있던 다른 스레드가 이 임계영역에 다시 접근하여 다시 lock을 걸며 사용합니다.
@@ -178,7 +181,45 @@ Synchronized 사용
 ![SynchronizedRunnableResult.PNG](/files/192) 
 동시성 문제가 해결되었다.
  
+### ReentrantLock (명시적 Lock)
+synchronized 키워드 없이 명시적으로 ReentratLcok을 사용하는 Lock.
+해당 Lock의 범위를 메서드 내부에서 한정하기 어렵거나, 동시에 여러 Lock을 사용하고 싶을 때 사용합니다.
+직접적으로 Lock 객체를 생성하여 사용하며, 
+한 스레드가 lock() 메서드를 사용하면 다른 스레드는 해당 lock() 메서드 시작점에 접근하지 못하고 대기합니다.
+이는 unlock()메서드를 실행하면 다른 메서드가 lock을 얻음으로써 해결할 수 있습니다.
+```javascript
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+public class Reentrant {
+    public static void main(String[] args) {
+        Count count = new Count();
+        for (int i = 0; i < 100; i++) {
+            new Thread(){
+                public void run(){
+                    for (int j = 0; j < 100; j++) {
+                        count.getLock().lock();
+                        System.out.println(count.view());
+                        count.getLock().unlock();
+                    }
+                }
+            }.start();
+        }
+    }
+}
 
+class Count {
+    private int count = 0;
+    private Lock lock = new ReentrantLock();
+    public int view() {
+        return ++count;
+    }
+    public Lock getLock(){
+        return lock;
+    };
+}
+```
+## 결과
+![ReentrantLockResult.PNG](/files/206) 
 
 # Singleton Parttern
 ## Singleton Pattern이란?
