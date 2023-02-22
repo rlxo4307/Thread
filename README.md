@@ -181,11 +181,11 @@ Synchronized 사용
 
 
 # Singleton Parttern
-### Singleton Pattern이란?
+## Singleton Pattern이란?
 같은 생성자가 여러 번 호출되더라도 처음 생성자 호출 시 생성된 하나의 동일한 인스턴스가 반복적으로 반환되는 패턴입니다.
 그러므로 멀티스레드 환경에서 공유객체인 SharedObject 대신 사용할 수 있습니다.
 
-### java에서 가장 일반적인 싱글톤 패턴 구현 방법
+## java에서 가장 일반적인 싱글톤 패턴 구현 방법
 ```javascript
 class Singleton {
     private static Singleton myInstance = null;
@@ -208,12 +208,12 @@ class Singleton {
 Singleton singleton = Singleton.getInstance();
 ```
 
-### 멀티스레드 환경에서 Singleton Parttern의 문제점
+## 멀티스레드 환경에서 Singleton Parttern의 문제점
 하지만 위의 방법(가장 일반적인 싱글톤 패턴)은 멀티스레드 환경에서 여러 개의 스레드가 
 동시에 getInstance() 메소드에 접근한다고 할 때 여러 개의 인스턴스가 만들어질 수 있기 때문에 동시성 문제가 발생할 수 있습니다.
 
-### 해결 방법
-1. synchronized 메소드 선언
+## 해결 방법
+### 1. synchronized 메소드 선언
 ![SingletonSynchronized.PNG](/files/203)
 synchronized 키워드를 사용하여 getInstance() 메소드를 동기화하면, 최초로 접근한 스레드가
 해당 메서드 호출을 종료할 때 까지 다른 스레드가 접근하지 못하게 lock을 겁니다.
@@ -221,6 +221,6 @@ synchronized 키워드를 사용하여 getInstance() 메소드를 동기화하�
 여러 스레드가 동시에 접근할 때 발생하는 문제는 해결할 수 있지만
 getInstatnce() 메서드를 호출할 때 마다 lock이 걸려 성능 저하가 발생하는 단점이 있습니다.
 
-2. DCL(Double Checked Locking)
+### 2. DCL(Double Checked Locking)
 
 
