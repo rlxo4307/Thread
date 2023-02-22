@@ -178,3 +178,9 @@ Synchronized 사용
 ![SynchronizedRunnableResult.PNG](/files/192) 
 동시성 문제가 해결되었다.
  
+
+
+# Singleton
+singleton(싱글톤)이란
+같은 생성자가 여러 번 호출되더라도 처음 생성자 호출 시 생성된 하나의 동일한 인스턴스가 반복적으로 반환되는 패턴이다.
+그러므로 멀티스레드 환경에서 SharedObject 대용으로 사용할 수 있다.
