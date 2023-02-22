@@ -25,10 +25,10 @@
 class SharedObject{
     int money = 0;
     public void add() {
-        System.out.print("입금:" + ++money);
+        System.out.println("입금:" + ++money + " | 1번 스레드");
     }
     public void minus() {
-        System.out.print("출금:" + --money);
+        System.out.println("출금:" + --money + " | 2번 스레드");
     }
 }
 ```
@@ -47,7 +47,6 @@ class MulThread1 extends Thread {
     public void run() {
         for(int i=0; i<100; i++) {
             so.add();
-            System.out.println(" | 1번 스레드");
         }
     }
 }
@@ -95,10 +94,10 @@ class Main {
 class SharedObject{
     int money = 0;
     public void add() {
-        System.out.print("입금:" + ++money);
+        System.out.print("입금:" + ++money + " | 1번 스레드");
     }
     public void minus() {
-        System.out.print("출금:" + --money);
+        System.out.print("출금:" + --money + " | 2번 스레드");
     }
 }
 ```
@@ -116,7 +115,6 @@ class MulThread1 implements Runnable {
     public void run() {
         for(int i=0; i<100; i++) {
             so.add();
-            System.out.println(" | 1번 스레드");
         }
     }
 }
