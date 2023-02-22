@@ -191,9 +191,22 @@ Lock은 메서드, 변수에 각각 걸 수 있습니다.
 이후 임계영역의 코드를 모두 실행하게 되면 unlock 상태가 되어 대기하고 있던 다른 스레드가 이 임계영역에 다시 접근하여 다시 lock을 걸며 사용합니다.
 
 1. 메서드에 synchronized 설정
-![SynchronizedMethod.PNG](/files/202) 
+```javascript
+int money = 0;
+    public synchronized void add() {
+        System.out.println("입금:" + ++money + " | 1번 스레드");
+    }
+```
 2. 코드블럭에 synchronized 설정
-![SynchronizedCodeBlock.PNG](/files/201) 
+```javascript
+int money = 0;
+    public void add() {
+        synchronized (this){
+            this.money++;
+        }
+        System.out.println("입금:" + money + " | 1번 스레드");
+    }
+```
 
 ## 결과
 ```javascript
