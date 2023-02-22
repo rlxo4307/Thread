@@ -120,7 +120,7 @@ class MulThread1 implements Runnable {
 }
 ```
 2-3. 메인 함수에서 SharedObject 객체를 생성한 후 interface 객체의 생성자에 SharedObject 객체를 생성자 파라미터로 넣어준 후,
-     멀티쓰레드 1, 2 생성시 interface 객체1, 2를 생성자 파라미터로 넣어준다.
+     멀티쓰레드 1, 2 생성시 interface 객체1, 2를 생성자 파라미터로 넣어줍니다.
 ```javascript
 class Main {
     public static void main(String[] args) throws InterruptedException {
@@ -181,10 +181,11 @@ Synchronized 사용
 
 
 # Singleton Parttern
-같은 생성자가 여러 번 호출되더라도 처음 생성자 호출 시 생성된 하나의 동일한 인스턴스가 반복적으로 반환되는 패턴.
-그러므로 멀티스레드 환경에서 공유객체인 SharedObject 대신 사용할 수 있다.
+### Singleton Pattern이란?
+같은 생성자가 여러 번 호출되더라도 처음 생성자 호출 시 생성된 하나의 동일한 인스턴스가 반복적으로 반환되는 패턴입니다.
+그러므로 멀티스레드 환경에서 공유객체인 SharedObject 대신 사용할 수 있습니다.
 
-java에서 가장 일반적인 싱글톤 패턴 구현 방법
+### java에서 가장 일반적인 싱글톤 패턴 구현 방법
 ```javascript
 class Singleton {
     private static Singleton myInstance = null;
@@ -199,13 +200,19 @@ class Singleton {
         return myInstance;
     }
 }
+
 ```
 싱글톤 패턴은 생성자를 사용하여 이미 만들어진 인스턴스가 있는지 존재한 후
-객체를 생성 혹은 반환하는 static 메소드를 활용하여 호출한다.
+객체를 생성 혹은 반환하는 static 메소드를 활용하여 호출합니다.
 ```javascripnt
 Singleton singleton = Singleton.getInstance();
 ```
 
-하지만 위의 방법은 멀티스레드 환경에서 여러 개의 스레드가 
-동시에 getInstance() 메소드에 접근한다고 할 때 여러 개의 인스턴스가 만들어질 수 있기 때문에 동시성 문제가 발생할 수 있다.
+### 멀티스레드 환경에서 Singleton Parttern의 문제점
+하지만 위의 방법(가장 일반적인 싱글톤 패턴)은 멀티스레드 환경에서 여러 개의 스레드가 
+동시에 getInstance() 메소드에 접근한다고 할 때 여러 개의 인스턴스가 만들어질 수 있기 때문에 동시성 문제가 발생할 수 있습니다.
+
+### 해결 방법
+1. synchronized 메소드 선언
+
 
