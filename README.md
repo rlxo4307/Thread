@@ -190,32 +190,35 @@ synchronized 키워드 없이 명시적으로 ReentratLcok을 사용하는 Lock.
 ```javascript
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-public class Reentrant {
-    public static void main(String[] args) {
-        Count count = new Count();
-        for (int i = 0; i < 100; i++) {
-            new Thread(){
-                public void run(){
-                    for (int j = 0; j < 100; j++) {
-                        count.getLock().lock();
-                        System.out.println(count.view());
-                        count.getLock().unlock();
-                    }
-                }
-            }.start();
-        }
-    }
-}
 
-class Count {
-    private int count = 0;
+class SharedObject {
+    private int money = 0;
     private Lock lock = new ReentrantLock();
-    public int view() {
-        return ++count;
-    }
     public Lock getLock(){
         return lock;
     };
+    public void add() {
+        System.out.println("입금:" + ++money + " | 1번 스레드");
+    }
+    public void minus() {
+        System.out.println("출금:" + --money + " | 2번 스레드");
+    }
+}
+
+class MulThread1 implements Runnable {
+    SharedObject so;
+    public MulThread1(SharedObject so) {
+        this.so = so;
+    }
+
+    @Override
+    public void run() {
+        for(int i=0; i<100; i++) {
+            so.getLock().lock();
+            so.add();
+            so.getLock().unlock();
+        }
+    }
 }
 ```
 ## 결과
