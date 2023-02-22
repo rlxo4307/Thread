@@ -78,7 +78,16 @@ class Main {
 }
 ```
 ## 결과
-![ThreadResult.PNG](/files/187) 
+```javascript
+출금:-15 | 2번 스레드
+출금:-16 | 2번 스레드
+출금:-17 | 2번 스레드
+입금:0 | 1번 스레드
+입금:-17 | 1번 스레드
+출금:-18 | 2번 스레드
+입금:-16 | 1번 스레드
+입금:-16 | 1번 스레드
+```
 ## 문제점
 여러 멀티 쓰레드가 공유객체인 SharedOjbect에 동시에 접근하는 경우 동시성문제 발생.
 첫 번째 동작할 때와 두 번째 동작할 때의 자원 상태가 변하기 때문에 문제가 발생합니다.
@@ -151,7 +160,15 @@ class Main {
 }
 ```
 ## 결과
-![RunnableResult.PNG](/files/188) 
+```javascript
+입금:-3 | 1번 스레드
+입금:-2 | 1번 스레드
+입금:-1 | 1번 스레드
+입금:0 | 1번 스레드
+출금:-9 | 2번 스레드
+
+Process finished with exit code 0
+```
 ## 문제점
 Thread와 마찬가지로 동시성 문제 발생.
 ## 해결 방법
@@ -179,7 +196,18 @@ Lock은 메서드, 변수에 각각 걸 수 있습니다.
 ![SynchronizedCodeBlock.PNG](/files/201) 
 
 ## 결과
-![SynchronizedRunnableResult.PNG](/files/192) 
+```javascript
+출금:-1 | 2번 스레드
+출금:-2 | 2번 스레드
+출금:-3 | 2번 스레드
+출금:-4 | 2번 스레드
+출금:-5 | 2번 스레드
+출금:-6 | 2번 스레드
+입금:-5 | 1번 스레드
+입금:-4 | 1번 스레드
+입금:-3 | 1번 스레드
+입금:-2 | 1번 스레드
+```
 동시성 문제가 해결되었다.
  
 ### ReentrantLock (명시적 Lock)
@@ -214,10 +242,14 @@ class SharedObject {
         return lock;
     };
     public void add() {
+        lock.lock();
         System.out.println("입금:" + ++money + " | 1번 스레드");
+        lock.unlock();
     }
     public void minus() {
+        lock.lock();
         System.out.println("출금:" + --money + " | 2번 스레드");
+        lock.unlock();
     }
 }
 
@@ -230,9 +262,7 @@ class MulThread1 implements Runnable {
     @Override
     public void run() {
         for(int i=0; i<100; i++) {
-            so.getLock().lock();
             so.add();
-            so.getLock().unlock();
         }
     }
 }
@@ -246,15 +276,20 @@ class MulThread2 implements Runnable {
     @Override
     public void run() {
         for(int i=0; i<100; i++) {
-            so.getLock().lock();
             so.minus();
-            so.getLock().unlock();
         }
     }
 }
 ```
 ## 결과
-![ReentrantLockResult.PNG](/files/209)  
+```javascript
+출금:-1 | 2번 스레드
+입금:0 | 1번 스레드
+입금:1 | 1번 스레드
+입금:2 | 1번 스레드
+입금:3 | 1번 스레드
+입금:4 | 1번 스레드
+```
 
 # Singleton Parttern
 ## Singleton Pattern이란?
