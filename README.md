@@ -172,7 +172,7 @@ Synchronized 사용
 1. 메서드에 synchronized 설정
 ![SynchronizedMethod.PNG](/files/189)
 2. 코드블럭에 synchronized 설정
-![SynchronizedCodeBlock.PNG](/files/191) 
+![SynchronizedCodeBlock.PNG](/files/201) 
 
 ## 결과
 ![SynchronizedRunnableResult.PNG](/files/192) 
