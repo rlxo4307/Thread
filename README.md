@@ -78,7 +78,7 @@ class Main {
 }
 ```
 ## 결과
-![804-20232-22-105-53.png](/files/194)
+![ThreadResult.PNG](/files/182) 
 ## 문제점
 여러 멀티 쓰레드가 공유객체인 SharedOjbect에 동시에 접근하는 경우 동시성문제 발생.
 첫 번째 동작할 때와 두 번째 동작할 때의 자원 상태가 변하기 때문에 문제가 발생합니다.
@@ -152,7 +152,7 @@ class Main {
 }
 ```
 ## 결과
-![109-20232-22-1021-12.png](/files/196)  
+![RunnableResult.PNG](/files/183) 
 ## 문제점
 Thread와 마찬가지로 동시성 문제 발생.
 ## 해결 방법
@@ -172,11 +172,11 @@ Synchronized 사용
 이후 임계영역의 코드를 모두 실행하게 되면 unlock 상태가 되어 대기하고 있던 다른 스레드가 이 임계영역에 다시 접근하여 다시 lock을 걸며 사용합니다.
 
 1. 메서드에 synchronized 설정
-![163-20232-22-1036-37.png](/files/198) 
+![SynchronizedMethod.PNG](/files/184) 
 2. 코드블럭에 synchronized 설정
-![390-20232-22-1037-53.png](/files/199)
+![SynchronizedCodeBlock.PNG](/files/185) 
 
 ## 결과
-![62-20232-22-1041-7.png](/files/181) 
+![SynchronizedRunnableResult.PNG](/files/186) 
 동시성 문제가 해결되었다.
  
