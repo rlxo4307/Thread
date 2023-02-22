@@ -214,7 +214,7 @@ class SharedObject {
         return lock;
     };
     public void add() {
-        System.out.println("출금:" + ++money + " | 1번 스레드");
+        System.out.println("입금:" + ++money + " | 1번 스레드");
     }
     public void minus() {
         System.out.println("출금:" + --money + " | 2번 스레드");
@@ -254,7 +254,7 @@ class MulThread2 implements Runnable {
 }
 ```
 ## 결과
-![ReentrantLockResult.PNG](/files/208) 
+![ReentrantLockResult.PNG](/files/209)  
 
 # Singleton Parttern
 ## Singleton Pattern이란?
