@@ -330,10 +330,11 @@ class SharedObject {
 
 2. writelock에 readlock을 건다면?
 ```javascript
-private ReentrantReadWriteLock useLock = new ReentrantReadWriteLock();
-    public Lock getLock(){
-        return lock;
-    };
+class SharedObject {
+    private int money = 0;
+
+    private ReentrantReadWriteLock useLock = new ReentrantReadWriteLock();
+
     public void add() {
         useLock.readLock().lock();
         System.out.println("입금:" + ++money + " | 1번 스레드");
@@ -344,6 +345,7 @@ private ReentrantReadWriteLock useLock = new ReentrantReadWriteLock();
         System.out.println("출금:" + --money + " | 2번 스레드");
         useLock.writeLock().lock();
     }
+}
 ```
 ### 결과값
 ```javascript
@@ -377,6 +379,28 @@ class Singleton {
     }
 }
 
+```
+### Runnable 방식으로 일반적인 singleton 구현하기
+```javascript
+public class Singleton {
+    private static Singleton myInstance = null;
+
+    private Singleton() {}
+
+    public static Singleton getInstance(){
+        if(myInstance == null) {
+            myInstance = new Singleton();
+        }
+        return myInstance;
+    }
+    private int money = 0;
+    synchronized void add(){
+        System.out.println("입금:"+ ++money + " | 1번 스레드");
+    }
+    synchronized void minus(){
+        System.out.println("출금:"+ --money + " | 2번 스레드");
+    }
+}
 ```
 싱글톤 패턴은 생성자를 사용하여 이미 만들어진 인스턴스가 있는지 존재한 후
 객체를 생성 혹은 반환하는 static 메소드를 활용하여 호출합니다.
@@ -438,14 +462,11 @@ volatile 키워드를 myInstance 선언문에 붙여서 사용하면, myInstance
 ```javascript
 class SingletonVolatile {
     private volatile static SingletonVolatile myInstance = null;
+
     private SingletonVolatile() {}
+
     private int money = 0;
-    synchronized void add(){
-        System.out.println("입금:"+ ++money + " | 1번 스레드");
-    }
-    synchronized void minus(){
-        System.out.println("출금:"+ --money + " | 2번 스레드");
-    }
+
     public static SingletonVolatile getInstance() {
         if (myInstance == null) {
             synchronized (SingletonVolatile.class) {
@@ -455,6 +476,12 @@ class SingletonVolatile {
             }
         }
         return myInstance;
+    }
+    synchronized void add(){
+        System.out.println("입금:"+ ++money + " | 1번 스레드");
+    }
+    synchronized void minus(){
+        System.out.println("출금:"+ --money + " | 2번 스레드");
     }
 }
 ```
@@ -468,7 +495,9 @@ LazyHolder 방식은 최초 JVM이 Class Loader를 이용해서 class path 내�
 ```javascript
 class SingletonLazyHolder {
     private SingletonLazyHolder() {}
+
     private int money = 0;
+
     public static SingletonLazyHolder getInstance() {
         return LazyHolder.INSTANCE;
     }
