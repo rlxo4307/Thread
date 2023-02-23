@@ -460,12 +460,57 @@ public class Singleton {
         }
         return myInstance;
     }
+
     private int money = 0;
+
     synchronized void add(){
         System.out.println("입금:"+ ++money + " | 1번 스레드");
     }
     synchronized void sub(){
         System.out.println("출금:"+ --money + " | 2번 스레드");
+    }
+}
+
+class Main {
+    public static void main(String[] args){
+        SingletonDCL si = SingletonDCL.getInstance();
+
+        Runnable r1 = new MulThread1(si);
+        Runnable r2 = new MulThread2(si);
+        Thread t1 = new Thread(r1);
+        Thread t2 = new Thread(r2);
+        t1.start();
+        t2.start();
+    }
+}
+
+class MulThread1 implements Runnable {
+    SingletonDCL si = null;
+    public MulThread1(){}
+    public MulThread1(SingletonDCL si){
+        this.si = si;
+    }
+
+    @Override
+    public void run(){
+        for(int i=0; i<100; i++){
+            si.add();
+        }
+    }
+}
+
+class MulThread2 implements Runnable {
+    SingletonDCL si = null;
+    public MulThread2(){}
+    public MulThread2(SingletonDCL si){
+        this.si = si;
+    }
+
+    @Override
+    public void run(){
+        for(int i=0; i<100; i++){
+            si.sub();
+        }
     }
 }
 ```
@@ -503,11 +548,13 @@ getInstatnce() 메서드를 호출할 때 마다 lock이 걸려 성능 저하가
 
 ### 2. DCL(Double Checked Locking)
 synchronized 메소드 선언 방식의 단점을 보완하여, 생성된 인스턴스가 존재하지 않을 때만 lock을 거는 방법입니다.
+
+### DCL 방식으로 Singleton 구현하기
 ```javascript
 class SingletonDCL {
     private static SingletonDCL myInstance = null;
-
     private SingletonDCL() {}
+    private int money = 0;
 
     public static SingletonDCL getInstance() {
         if (myInstance == null) {
@@ -517,12 +564,28 @@ class SingletonDCL {
                 }
             }
         }
-
         return myInstance;
+    }
+    
+    public synchronized void add(){
+        System.out.println("입금:" + ++money + " | 1번 스레드");
+    }
+    public synchronized void sub(){
+        System.out.println("출금:" + --money + " | 2번 스레드");
     }
 }
 ```
- 
+### 결과
+```javascript
+출금:-1 | 2번 스레드
+입금:0 | 2번 스레드
+:
+출금:1 | 2번 스레드
+출금:0 | 2번 스레드
+
+Process finished with exit code 0
+```
+
 ### 3. DCL 방식에 volatile 키워드 사용
 volatile 키워드를 myInstance 선언문에 붙여서 사용하면, myInstance에 값을 할당하거나 수정할 때
 메인 메모리에 바로 쓰게 됩니다.
@@ -531,8 +594,6 @@ class SingletonVolatile {
     private volatile static SingletonVolatile myInstance = null;
 
     private SingletonVolatile() {}
-
-    private int money = 0;
 
     public static SingletonVolatile getInstance() {
         if (myInstance == null) {
@@ -544,6 +605,9 @@ class SingletonVolatile {
         }
         return myInstance;
     }
+
+    private int money = 0;
+
     synchronized void add(){
         System.out.println("입금:"+ ++money + " | 1번 스레드");
     }
@@ -563,14 +627,15 @@ LazyHolder 방식은 최초 JVM이 Class Loader를 이용해서 class path 내�
 class SingletonLazyHolder {
     private SingletonLazyHolder() {}
 
-    private int money = 0;
-
     public static SingletonLazyHolder getInstance() {
         return LazyHolder.INSTANCE;
     }
     private static class LazyHolder {
         private static final SingletonLazyHolder INSTANCE = new SingletonLazyHolder();
     }
+
+    private int money = 0;
+
     public synchronized void add(){
         System.out.println("입금:" + ++money + " | 1번 스레드");
     }
