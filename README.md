@@ -554,7 +554,6 @@ synchronized 메소드 선언 방식의 단점을 보완하여, 생성된 인스
 class SingletonDCL {
     private static SingletonDCL myInstance = null;
     private SingletonDCL() {}
-    private int money = 0;
 
     public static SingletonDCL getInstance() {
         if (myInstance == null) {
@@ -566,7 +565,9 @@ class SingletonDCL {
         }
         return myInstance;
     }
-    
+
+    private int money = 0;
+
     public synchronized void add(){
         System.out.println("입금:" + ++money + " | 1번 스레드");
     }
