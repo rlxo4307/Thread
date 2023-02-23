@@ -357,8 +357,10 @@ class SharedObject {
 출금:-99 | 2번 스레드
 출금:-100 | 2번 스레드
 ```
-add() 메서드가 실행되지 않는다.
-readLock이 걸린 상태에서 메모리에 접근하려고 해서 다음 명령으로 진행되지 않는 상황인 거로 판단.
+readLock을 설정한 add() 메서드가 실행되지 않고, writeLock을 설정한 sub() 메서드는 실행된다.
+첫 add() 실행에 readLock을 걸었지만 변수를 변경하려고 접근하니 readLock에 막혀
+useLock.readLock().unlock();이 실행되지 않아 add()에 계속 readLock이 걸려있는 상태이므로
+add()를 run()하는 MulThread1인 t1.start()가 더 이상 진행되지 않는다.
 
 3. 제대로 된 readLock, writeLock 사용
 ```javascript
