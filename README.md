@@ -28,7 +28,7 @@ class SharedObject{
     public void add() {
         System.out.println("입금:" + ++money + " | 1번 스레드");
     }
-    public void minus() {
+    public void sub() {
         System.out.println("출금:" + --money + " | 2번 스레드");
     }
 }
@@ -106,7 +106,7 @@ class SharedObject{
     public void add() {
         System.out.print("입금:" + ++money + " | 1번 스레드");
     }
-    public void minus() {
+    public void sub() {
         System.out.print("출금:" + --money + " | 2번 스레드");
     }
 }
@@ -259,7 +259,7 @@ class SharedObject {
         System.out.println("입금:" + ++money + " | 1번 스레드");
         lock.unlock();
     }
-    public void minus() {
+    public void sub() {
         lock.lock();
         System.out.println("출금:" + --money + " | 2번 스레드");
         lock.unlock();
@@ -289,7 +289,7 @@ class MulThread2 implements Runnable {
     @Override
     public void run() {
         for(int i=0; i<100; i++) {
-            so.minus();
+            so.sub();
         }
     }
 }
@@ -322,7 +322,7 @@ class SharedObject {
         System.out.println("입금:" + ++money + " | 1번 스레드");
         lock.unlock();
     }
-    public void minus() {
+    public void sub() {
         useLock.writeLock().lock();
         System.out.println("출금:" + --money + " | 2번 스레드");
         lock.unlock();
@@ -342,7 +342,7 @@ class SharedObject {
         System.out.println("입금:" + ++money + " | 1번 스레드");
         useLock.readLock().unlock();
     }
-    public void minus() {
+    public void sub() {
         useLock.writeLock().lock();
         System.out.println("출금:" + --money + " | 2번 스레드");
         useLock.writeLock().lock();
@@ -464,7 +464,7 @@ public class Singleton {
     synchronized void add(){
         System.out.println("입금:"+ ++money + " | 1번 스레드");
     }
-    synchronized void minus(){
+    synchronized void sub(){
         System.out.println("출금:"+ --money + " | 2번 스레드");
     }
 }
@@ -547,7 +547,7 @@ class SingletonVolatile {
     synchronized void add(){
         System.out.println("입금:"+ ++money + " | 1번 스레드");
     }
-    synchronized void minus(){
+    synchronized void sub(){
         System.out.println("출금:"+ --money + " | 2번 스레드");
     }
 }
@@ -574,7 +574,7 @@ class SingletonLazyHolder {
     public synchronized void add(){
         System.out.println("입금:" + ++money + " | 1번 스레드");
     }
-    public synchronized void minus(){
+    public synchronized void sub(){
         System.out.println("출금:" + --money + " | 2번 스레드");
     }
 }
