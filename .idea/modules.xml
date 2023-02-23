@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/onboarding/MavenMake.iml" filepath="$PROJECT_DIR$/onboarding/MavenMake.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/SEASON2_HGT.iml" filepath="$PROJECT_DIR$/.idea/SEASON2_HGT.iml" />
     </modules>
   </component>
