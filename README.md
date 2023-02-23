@@ -305,7 +305,9 @@ class MulThread2 implements Runnable {
 ```
 
 ### writeLock & readLock
-1. writeLock = 메모리에 값을 입력하기 위해 메모리에 접근을 못하게 거는 lock
+   readLock = 메모리 내 값을 가져오기 위해 사용하는 lock
+
+1. writeLock = 메모리에 값을 변경하기 위해 사용하는 lock
 ```javascript
 class SharedObject {
     private int money = 0;
@@ -328,7 +330,7 @@ class SharedObject {
 }
 ```
 
-2. writelock에 readlock을 건다면?
+2. writelock을 사용할 곳에 readlock을 사용한다면?
 ```javascript
 class SharedObject {
     private int money = 0;
@@ -347,7 +349,7 @@ class SharedObject {
     }
 }
 ```
-### 결과값
+### 결과
 ```javascript
 출금:-96 | 2번 스레드
 출금:-97 | 2번 스레드
@@ -357,6 +359,71 @@ class SharedObject {
 ```
 add() 메서드가 실행되지 않는다.
 readLock이 걸린 상태에서 메모리에 접근하려고 해서 다음 명령으로 진행되지 않는 상황인 거로 판단.
+
+3. 제대로 된 readLock, writeLock 사용
+```javascript
+class SharedObject {
+    private int money = 0;
+    private ReentrantReadWriteLock useLock = new ReentrantReadWriteLock();
+
+    public void add() {
+        useLock.writeLock().lock();
+        try {
+            ++money;
+        }finally {
+            useLock.writeLock().unlock();
+        }
+    }
+    public void getMoney() {
+        useLock.readLock().lock();
+        try{
+            System.out.println("현재 잔액:" + money);
+        }finally {
+            useLock.readLock().unlock();
+        }
+    }
+}
+
+class MulThread1 implements Runnable {
+    SharedObject so;
+    public MulThread1(SharedObject so) {
+        this.so = so;
+    }
+
+    @Override
+    public void run() {
+        for(int i=0; i<100; i++) {
+            so.add();
+        }
+    }
+}
+
+class MulThread2 implements Runnable {
+    SharedObject so;
+    public MulThread2(SharedObject so) {
+        this.so = so;
+    }
+
+    @Override
+    public void run() {
+        for(int i=0; i<100; i++) {
+            so.getMoney();
+        }
+    }
+}
+```
+### 결과
+```javascript
+현재 잔액:0
+현재 잔액:0
+현재 잔액:0
+현재 잔액:0
+현재 잔액:0
+현재 잔액:0
+현재 잔액:2
+현재 잔액:52
+```
+readLock이 걸린 MulThread2(getMoney())와 writeLock이 걸린 MulThread1(add())이 잘 작동한다.
 
 # Singleton Parttern
 ## Singleton Pattern이란?
