@@ -9,6 +9,8 @@ class Main {
         Thread t2 = new Thread(r2);
 
         t1.start();
+        t1.join();
         t2.start();
+        t2.join();
     }
 }
