@@ -16,15 +16,12 @@ class Main {
         Callable1 c1 = new Callable1(a, b);
         Future<Integer> f1 = executor.submit(c1);
 
-        Runnable1 r1 = new Runnable1();
-        Thread t1 = new Thread(r1);
 
         int i = 0;
-            while(i < 100) {
+            while(true) {
                 i += f1.get();
                 System.out.println("Callable Add Result [("+a+"+"+b+")배로 증가]:" + i);
-                t1.start();
+                new Thread(new Runnable1()).start();
             }
-
     }
 }

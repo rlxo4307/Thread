@@ -16,7 +16,7 @@ class Main {
         Future<Integer> future = executor.submit(c1);
 
         int i = 0;
-        while (i < 100) {
+        while (i < 1000) {
             i += future.get();
             System.out.println("Future Add Result [("+a+"+"+b+")배로 증가]:" + i);
         }
