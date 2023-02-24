@@ -11,8 +11,8 @@ public class Callable1 implements Callable<Integer> {
     }
     @Override
     public Integer call() throws Exception{
-        new Thread().sleep(2000);
         int result = a + b;
+        new Thread().sleep(1000);
         return result;
     }
 }

@@ -16,7 +16,6 @@ class Main {
         Callable1 c1 = new Callable1(a, b);
         Future<Integer> f1 = executor.submit(c1);
 
-
         int i = 0;
             while(true) {
                 i += f1.get();
