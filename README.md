@@ -687,7 +687,7 @@ class Main {
 class Callable1 implements Callable<Integer> {
     int a;
     int b;
-    public Callable1(Integer a, Integer b){
+    public Callable1(int a, int b){
         this.a = a;
         this.b = b;
     }
@@ -699,8 +699,8 @@ class Callable1 implements Callable<Integer> {
     }
 }
 ```
-#Callable / Runnable
-main
+# Callable / Runnable
+### main
 ```javascript
 int i = 0;
 while(true) {
