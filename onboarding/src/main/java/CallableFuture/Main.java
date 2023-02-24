@@ -20,5 +20,6 @@ class Main {
             i += future.get();
             System.out.println("Future Add Result [("+a+"+"+b+")배로 증가]:" + i);
         }
+        executor.shutdown();
     }
 }
