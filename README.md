@@ -729,9 +729,9 @@ public class Runnable1 implements Runnable{
 ```javascript
 class Main {
     public static void main(String[] args){
-        ExecutorService executor = Executors.newFixedThreadPool(2);
+        ExecutorService executor = Executors.newFixedThreadPool(3);
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 9; i++) {
             Runnable r1=new MulRunnable();
             executor.submit(r1);
         }
@@ -811,3 +811,5 @@ pool-1-thread-1가 종료되었습니다
 
 Process finished with exit code 0
 ```
+main.class의 ExecutorService executor = Executors.newFixedThreadPool(3);
+에 설정한 스레드 3개씩 실행됨을 확인할 수 있다.
