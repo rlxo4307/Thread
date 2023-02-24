@@ -26,10 +26,14 @@
 class SharedObject{
     int money = 0;
     public void add() {
-        System.out.println("입금:" + ++money + " | 1번 스레드");
+        for(int i=0; i<100; i++){
+            System.out.println("입금:" + ++money + " | 1번 스레드");
+        }
     }
     public void sub() {
-        System.out.println("출금:" + --money + " | 2번 스레드");
+        for(int i=0; i<100; i++){
+            System.out.println("출금:" + --money + " | 2번 스레드");
+        }
     }
 }
 ```
@@ -46,9 +50,7 @@ class MulThread1 extends Thread {
 
     @Override
     public void run() {
-        for(int i=0; i<100; i++) {
-            so.add();
-        }
+        so.add();
     }
 }
 ```
@@ -104,10 +106,14 @@ class Main {
 class SharedObject{
     int money = 0;
     public void add() {
-        System.out.print("입금:" + ++money + " | 1번 스레드");
+        for(int i=0; i<100; i++){
+            System.out.print("입금:" + ++money + " | 1번 스레드");
+        {
     }
     public void sub() {
-        System.out.print("출금:" + --money + " | 2번 스레드");
+        for(int i=0; i<100; i++){
+            System.out.print("출금:" + --money + " | 2번 스레드");
+        }
     }
 }
 ```
@@ -123,9 +129,7 @@ class MulThread1 implements Runnable {
 
     @Override
     public void run() {
-        for(int i=0; i<100; i++) {
-            so.add();
-        }
+        so.add();
     }
 }
 ```
@@ -260,9 +264,11 @@ class SharedObject {
         lock.unlock();
     }
     public void sub() {
-        lock.lock();
-        System.out.println("출금:" + --money + " | 2번 스레드");
-        lock.unlock();
+        for(int i=0; i<100; i++){
+            lock.lock();
+            System.out.println("출금:" + --money + " | 2번 스레드");
+            lock.unlock();
+        }
     }
 }
 
@@ -274,9 +280,7 @@ class MulThread1 implements Runnable {
 
     @Override
     public void run() {
-        for(int i=0; i<100; i++) {
-            so.add();
-        }
+        so.add();
     }
 }
 
@@ -288,9 +292,7 @@ class MulThread2 implements Runnable {
 
     @Override
     public void run() {
-        for(int i=0; i<100; i++) {
-            so.sub();
-        }
+        so.sub();
     }
 }
 ```
@@ -318,14 +320,18 @@ class SharedObject {
     private ReentrantReadWriteLock readlock;
     
     public void add() {
-        useLock.writeLock().lock();
-        System.out.println("입금:" + ++money + " | 1번 스레드");
-        lock.unlock();
+        for(int i=0; i<100; i++){
+            useLock.writeLock().lock();
+            System.out.println("입금:" + ++money + " | 1번 스레드");
+            lock.unlock();
+        }
     }
     public void sub() {
-        useLock.writeLock().lock();
-        System.out.println("출금:" + --money + " | 2번 스레드");
-        lock.unlock();
+        for(int i=0; i<100; i++){
+            useLock.writeLock().lock();
+            System.out.println("출금:" + --money + " | 2번 스레드");
+            lock.unlock();
+        }
     }
 }
 ```
@@ -338,14 +344,18 @@ class SharedObject {
     private ReentrantReadWriteLock useLock = new ReentrantReadWriteLock();
 
     public void add() {
-        useLock.readLock().lock();
-        System.out.println("입금:" + ++money + " | 1번 스레드");
-        useLock.readLock().unlock();
+        for(int i=0; i<100; i++){
+            useLock.readLock().lock();
+            System.out.println("입금:" + ++money + " | 1번 스레드");
+            useLock.readLock().unlock();
+        }
     }
     public void sub() {
-        useLock.writeLock().lock();
-        System.out.println("출금:" + --money + " | 2번 스레드");
-        useLock.writeLock().lock();
+        for(int i=0; i<100; i++){
+            useLock.writeLock().lock();
+            System.out.println("출금:" + --money + " | 2번 스레드");
+            useLock.writeLock().lock();
+        }
     }
 }
 ```
@@ -369,19 +379,23 @@ class SharedObject {
     private ReentrantReadWriteLock useLock = new ReentrantReadWriteLock();
 
     public void add() {
-        useLock.writeLock().lock();
-        try {
-            ++money;
-        }finally {
-            useLock.writeLock().unlock();
+        for(int i=0; i<100; i++){
+            useLock.writeLock().lock();
+            try {
+                ++money;
+            }finally {
+                useLock.writeLock().unlock();
+            }
         }
     }
     public void getMoney() {
-        useLock.readLock().lock();
-        try{
-            System.out.println("현재 잔액:" + money);
-        }finally {
-            useLock.readLock().unlock();
+        for(int i=0; i<100; i++){
+            useLock.readLock().lock();
+            try{
+                System.out.println("현재 잔액:" + money);
+            }finally {
+                useLock.readLock().unlock();
+            }
         }
     }
 }
@@ -394,9 +408,7 @@ class MulThread1 implements Runnable {
 
     @Override
     public void run() {
-        for(int i=0; i<100; i++) {
-            so.add();
-        }
+        so.add();
     }
 }
 
@@ -408,9 +420,7 @@ class MulThread2 implements Runnable {
 
     @Override
     public void run() {
-        for(int i=0; i<100; i++) {
-            so.getMoney();
-        }
+        so.getMoney();
     }
 }
 ```
@@ -453,23 +463,27 @@ class Singleton {
 ```javascript
 public class Singleton {
     private static Singleton myInstance = null;
-
     private Singleton() {}
-
     public static Singleton getInstance(){
         if(myInstance == null) {
             myInstance = new Singleton();
         }
         return myInstance;
     }
-
     private int money = 0;
-
-    synchronized void add(){
-        System.out.println("입금:"+ ++money + " | 1번 스레드");
+    public void add(){
+        for(int i=0; i<100; i++) {
+            synchronized (this) {
+                System.out.println("입금:" + ++money + " | 1번 스레드");
+            }
+        }
     }
-    synchronized void sub(){
-        System.out.println("출금:"+ --money + " | 2번 스레드");
+    public void sub(){
+        for(int i=0; i<100; i++) {
+            synchronized (this) {
+                System.out.println("출금:" + --money + " | 2번 스레드");
+            }
+        }
     }
 }
 
@@ -495,9 +509,7 @@ class MulThread1 implements Runnable {
 
     @Override
     public void run(){
-        for(int i=0; i<100; i++){
-            si.add();
-        }
+        si.add();
     }
 }
 
@@ -510,9 +522,7 @@ class MulThread2 implements Runnable {
 
     @Override
     public void run(){
-        for(int i=0; i<100; i++){
-            si.sub();
-        }
+        si.sub();
     }
 }
 ```
@@ -556,7 +566,6 @@ synchronized 메소드 선언 방식의 단점을 보완하여, 생성된 인스
 class SingletonDCL {
     private static SingletonDCL myInstance = null;
     private SingletonDCL() {}
-
     public static SingletonDCL getInstance() {
         if (myInstance == null) {
             synchronized (SingletonDCL.class) {
@@ -567,14 +576,20 @@ class SingletonDCL {
         }
         return myInstance;
     }
-
     private int money = 0;
-
-    public synchronized void add(){
-        System.out.println("입금:" + ++money + " | 1번 스레드");
+    public void add(){
+        for(int i=0; i<100; i++) {
+            synchronized (this) {
+                System.out.println("입금:" + ++money + " | 1번 스레드");
+            }
+        }
     }
-    public synchronized void sub(){
-        System.out.println("출금:" + --money + " | 2번 스레드");
+    public void sub(){
+        for(int i=0; i<100; i++) {
+            synchronized (this) {
+                System.out.println("출금:" + --money + " | 2번 스레드");
+            }
+        }
     }
 }
 ```
@@ -595,9 +610,7 @@ volatile 키워드를 myInstance 선언문에 붙여서 사용하면, myInstance
 ```javascript
 class SingletonVolatile {
     private volatile static SingletonVolatile myInstance = null;
-
     private SingletonVolatile() {}
-
     public static SingletonVolatile getInstance() {
         if (myInstance == null) {
             synchronized (SingletonVolatile.class) {
@@ -608,14 +621,20 @@ class SingletonVolatile {
         }
         return myInstance;
     }
-
     private int money = 0;
-
-    synchronized void add(){
-        System.out.println("입금:"+ ++money + " | 1번 스레드");
+    public void add(){
+        for(int i=0; i<100; i++) {
+            synchronized (this) {
+                System.out.println("입금:" + ++money + " | 1번 스레드");
+            }
+        }
     }
-    synchronized void sub(){
-        System.out.println("출금:"+ --money + " | 2번 스레드");
+    public void sub(){
+        for(int i=0; i<100; i++) {
+            synchronized (this) {
+                System.out.println("출금:" + --money + " | 2번 스레드");
+            }
+        }
     }
 }
 ```
@@ -636,14 +655,21 @@ class SingletonLazyHolder {
     private static class LazyHolder {
         private static final SingletonLazyHolder INSTANCE = new SingletonLazyHolder();
     }
-
     private int money = 0;
 
-    public synchronized void add(){
-        System.out.println("입금:" + ++money + " | 1번 스레드");
+    public void add(){
+        for(int i=0; i<100; i++) {
+            synchronized (this) {
+                System.out.println("입금:" + ++money + " | 1번 스레드");
+            }
+        }
     }
-    public synchronized void sub(){
-        System.out.println("출금:" + --money + " | 2번 스레드");
+    public void sub(){
+        for(int i=0; i<100; i++) {
+            synchronized (this) {
+                System.out.println("출금:" + --money + " | 2번 스레드");
+            }
+        }
     }
 }
 ```
