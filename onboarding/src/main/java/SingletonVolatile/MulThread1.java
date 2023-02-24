@@ -1,14 +1,12 @@
 package SingletonVolatile;
-class MulThread1 implements Runnable {
-    SingletonVolatile st = SingletonVolatile.getInstance();
-    public MulThread1(SingletonVolatile st) {
-        this.st = st;
-    }
 
+import SingletonRunnable.Singleton;
+
+class MulThread1 implements Runnable {
+    Singleton st = Singleton.getInstance();
+    public MulThread1(){}
     @Override
     public void run() {
-        for(int i=0; i<100; i++) {
-            st.add();
-        }
+        st.add();
     }
 }
