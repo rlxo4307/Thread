@@ -6,7 +6,7 @@ public class Runnable1 implements Runnable{
     public void run() {
         System.out.println("Runnable Success");
         try {
-            new Thread().sleep(1000);
+            new Thread().sleep(1000L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

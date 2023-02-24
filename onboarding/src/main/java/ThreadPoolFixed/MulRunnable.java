@@ -13,7 +13,7 @@ class MulRunnable implements Runnable{
 
     private void sleepThread(){
         try {
-            Thread.sleep(2000);
+            Thread.sleep(2000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
