@@ -9,13 +9,17 @@ class SharedObject {
         return lock;
     };
     public void add() {
-        lock.lock();
-        System.out.println("입금:" + ++money + " | 1번 스레드");
-        lock.unlock();
+        for(int i=0; i<100; i++) {
+            lock.lock();
+            System.out.println("입금:" + ++money + " | 1번 스레드");
+            lock.unlock();
+        }
     }
     public void sub() {
-        lock.lock();
-        System.out.println("출금:" + --money + " | 2번 스레드");
-        lock.unlock();
+        for(int i=0; i<100; i++) {
+            lock.lock();
+            System.out.println("출금:" + --money + " | 2번 스레드");
+            lock.unlock();
+        }
     }
 }
