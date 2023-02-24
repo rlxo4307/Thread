@@ -3,10 +3,10 @@ package SingletonVolatile;
 import SingletonRunnable.Singleton;
 
 class MulThread1 implements Runnable {
-    Singleton st = Singleton.getInstance();
     public MulThread1(){}
     @Override
     public void run() {
+        Singleton st = Singleton.getInstance();
         st.add();
     }
 }
