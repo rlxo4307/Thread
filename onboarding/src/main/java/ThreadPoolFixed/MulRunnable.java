@@ -5,8 +5,9 @@ class MulRunnable implements Runnable{
     @Override
     public void run(){
         SingletonLazyHolder si = SingletonLazyHolder.getInstance();
-        System.out.println(Thread.currentThread().getName());
+        System.out.println(Thread.currentThread().getName()+"가 시작되었습니다");
         si.add();
+        System.out.println(Thread.currentThread().getName()+"가 종료되었습니다");
         sleepThread();
     }
 
