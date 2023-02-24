@@ -724,3 +724,82 @@ public class Runnable1 implements Runnable{
     }
 }
 ```
+# FixedThreadPool
+### main
+```javascript
+class Main {
+    public static void main(String[] args){
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
+        for (int i = 1; i <= 10; i++) {
+            Runnable r1=new MulRunnable();
+            executor.submit(r1);
+        }
+        executor.shutdown();
+    }
+}
+```
+### LazyHolderSingleton
+```javascript
+class SingletonLazyHolder {
+    private SingletonLazyHolder() {}
+
+    public static SingletonLazyHolder getInstance() {
+        return SingletonLazyHolder.LazyHolder.INSTANCE;
+    }
+    private static class LazyHolder {
+        private static final SingletonLazyHolder INSTANCE = new SingletonLazyHolder();
+    }
+    private int money = 0;
+    public synchronized void add(){
+        System.out.println(" 입금:" + ++money);
+    }
+}
+```
+### Runnable
+```javascript
+class MulRunnable implements Runnable{
+    public MulRunnable(){}
+    @Override
+    public void run(){
+        SingletonLazyHolder si = SingletonLazyHolder.getInstance();
+        System.out.println(Thread.currentThread().getName());
+        si.add();
+        sleepThread();
+    }
+
+    private void sleepThread(){
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+```
+### 결과
+```javascript
+pool-1-thread-1
+pool-1-thread-2
+ 입금:1
+ 입금:2
+pool-1-thread-1
+pool-1-thread-2
+ 입금:3
+ 입금:4
+pool-1-thread-2
+ 입금:5
+pool-1-thread-1
+ 입금:6
+pool-1-thread-2
+ 입금:7
+pool-1-thread-1
+ 입금:8
+pool-1-thread-1
+ 입금:9
+pool-1-thread-2
+ 입금:10
+
+Process finished with exit code 0
+```
