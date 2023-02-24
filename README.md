@@ -656,3 +656,71 @@ Singleton 클래스가 최초 로딩 단계에서 로드가 되더라도, LazyHo
 
 또한 class를 로드하고 초기화하는 단계에서는 thread safety가 보장되기 때문에 별도의
 synchronized, volatile 키워드 없이 동시성 문제를 해결할 수 있습니다.
+
+
+# Callable / Future
+### main
+```javascript
+class Main {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+        System.out.print("두 수를 입력하세요:");
+        Scanner sc = new Scanner(System.in);
+        Integer a = sc.nextInt();
+        Integer b = sc.nextInt();
+        System.out.println();
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        Callable1 c1 = new Callable1(a, b);
+        Future<Integer> future = executor.submit(c1);
+
+        int i = 0;
+        while (i < 1000) {
+            i += future.get();
+            System.out.println("Future Add Result [("+a+"+"+b+")배로 증가]:" + i);
+        }
+    }
+}
+```
+### Callable
+```javascript
+class Callable1 implements Callable<Integer> {
+    int a;
+    int b;
+    public Callable1(Integer a, Integer b){
+        this.a = a;
+        this.b = b;
+    }
+    @Override
+    public Integer call() throws Exception {
+        new Thread().sleep(1500);
+        Integer result = a + b;
+        return result;
+    }
+}
+```
+#Callable / Runnable
+main
+```javascript
+int i = 0;
+while(true) {
+    i += f1.get();
+    System.out.println("Callable Add Result [("+a+"+"+b+")배로 증가]:" + i);
+    new Thread(new Runnable1()).start();
+}
+```
+### Runnable
+```javascript
+public class Runnable1 implements Runnable{
+    public Runnable1(){}
+    @Override
+    public void run() {
+        System.out.println("Runnable Success");
+        try {
+            new Thread().sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
