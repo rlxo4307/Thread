@@ -763,8 +763,9 @@ class MulRunnable implements Runnable{
     @Override
     public void run(){
         SingletonLazyHolder si = SingletonLazyHolder.getInstance();
-        System.out.println(Thread.currentThread().getName());
+        System.out.println(Thread.currentThread().getName()+"가 시작되었습니다");
         si.add();
+        System.out.println(Thread.currentThread().getName()+"가 종료되었습니다");
         sleepThread();
     }
 
@@ -780,26 +781,33 @@ class MulRunnable implements Runnable{
 ```
 ### 결과
 ```javascript
-pool-1-thread-1
-pool-1-thread-2
+pool-1-thread-1가 시작되었습니다
+pool-1-thread-2가 시작되었습니다
+pool-1-thread-3가 시작되었습니다
  입금:1
+pool-1-thread-1가 종료되었습니다
  입금:2
-pool-1-thread-1
-pool-1-thread-2
+pool-1-thread-3가 종료되었습니다
  입금:3
+pool-1-thread-2가 종료되었습니다
+pool-1-thread-2가 시작되었습니다
+pool-1-thread-3가 시작되었습니다
+pool-1-thread-1가 시작되었습니다
  입금:4
-pool-1-thread-2
+pool-1-thread-2가 종료되었습니다
  입금:5
-pool-1-thread-1
+pool-1-thread-1가 종료되었습니다
  입금:6
-pool-1-thread-2
+pool-1-thread-3가 종료되었습니다
+pool-1-thread-3가 시작되었습니다
+pool-1-thread-1가 시작되었습니다
+pool-1-thread-2가 시작되었습니다
  입금:7
-pool-1-thread-1
+pool-1-thread-3가 종료되었습니다
  입금:8
-pool-1-thread-1
+pool-1-thread-2가 종료되었습니다
  입금:9
-pool-1-thread-2
- 입금:10
+pool-1-thread-1가 종료되었습니다
 
 Process finished with exit code 0
 ```
