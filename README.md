@@ -998,5 +998,6 @@ class Main {
 생산자가 곱셈 결과를 생성합니다 | Queue Size:[5]
 소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:110 Queue Size:[4]
 생산자가 곱셈 결과를 생성합니다(입력한 첫 인수에 +1을 합니다) | Queue Size:[5]
-
 ```
+ArrayBlockingQueue에 설정한 Queue 갯수 5개 만큼 queue가 쌓이면
+Queue에 공간이 생길 때 까지 기다리는 것을 확일할 수 있었다.
