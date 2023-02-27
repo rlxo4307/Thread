@@ -887,30 +887,28 @@ main.class의 ExecutorService executor = Executors.newFixedThreadPool(3);
 ```javascript
 class Producer implements Runnable {
     private BlockingQueue queue;
-    public Producer(BlockingQueue queue) {
+    int a;
+    int b;
+    public Producer(BlockingQueue queue, int a, int b) {
         this.queue = queue;
+        this.a = a;
+        this.b = b;
     }
     @Override
     public void run() {
         try {
             Thread.sleep(1000L);
-
-            Date d = new Date();
-            String msg = "생성 시간 : "+d.toString();
-            queue.add(msg);
-
-            System.out.println("생산자가 작업(메시지)을 생성합니다 | Queue Size:[" + queue.size() + "]");
+            int result = this.a * this.b;
+            queue.add(result);
+            System.out.println("생산자가 곱셈 결과를 생성합니다 | Queue Size:[" + queue.size() + "]");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         try {
-            Thread.sleep(1000L);
-
-            Date d = new Date();
-            String msg = "생성 시간:"+d.toString();
-            queue.add(msg);
-
-            System.out.println("생산자가 작업(메시지)을 생성합니다 | Queue Size:[" + queue.size() + "]");
+            Thread.sleep(1001L);
+            int result = (this.a+1) * this.b;
+            queue.add(result);
+            System.out.println("생산자가 곱셈 결과를 생성합니다(입력한 첫 인수에 +1을 합니다) | Queue Size:[" + queue.size() + "]");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -928,18 +926,18 @@ class Consumer implements Runnable {
     @Override
     public void run() {
         try {
-            Thread.sleep(1001L);
+            Thread.sleep(2001L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        String msg = null;
+        int result = 0;
         try {
-            msg = (String) queue.take();
+            result = (Integer)queue.take();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("소비자가 작업(메시지)을 처리합니다 | " + msg + " Queue Size:[" + queue.size() + "]");
+        System.out.println("소비자가 작업(곰셈)을 처리합니다 | " + "곱셈 결과:" + result + " Queue Size:[" + queue.size() + "]");
     }
 }
 ```
@@ -949,39 +947,56 @@ class Consumer implements Runnable {
 class Main {
     public static void main(String[] args) {
         BlockingQueue queue = new ArrayBlockingQueue(5);
-
         ExecutorService executor = Executors.newFixedThreadPool(2);
-        Producer p = new Producer(queue);
-        Consumer c = new Consumer(queue);
 
-        int i = 0;
-        while(i < 1000) {
+        Scanner sc = new Scanner(System.in);
+        int a;
+        int b;
+
+        for(int i=0; i<1000; i++) {
+            System.out.println("곱할 두 수를 입력하세요 : ");
+            a = sc.nextInt();
+            b = sc.nextInt();
+
+            Producer p = new Producer(queue, a, b);
             executor.submit(p);
+            Consumer c = new Consumer(queue);
             executor.submit(c);
-            i++;
         }
-        executor.shutdown();
     }
 }
 ```
 ### 결과
 ```javascript
-생산자가 작업(메시지)을 생성합니다 | Queue Size:[1]
-소비자가 작업(메시지)을 처리합니다 | 생성 시간 : Mon Feb 27 10:48:58 KST 2023 Queue Size:[0]
-생산자가 작업(메시지)을 생성합니다 | Queue Size:[1]
-생산자가 작업(메시지)을 생성합니다 | Queue Size:[2]
-소비자가 작업(메시지)을 처리합니다 | 생성 시간:Mon Feb 27 10:48:59 KST 2023 Queue Size:[1]
-생산자가 작업(메시지)을 생성합니다 | Queue Size:[2]
-생산자가 작업(메시지)을 생성합니다 | Queue Size:[3]
-소비자가 작업(메시지)을 처리합니다 | 생성 시간 : Mon Feb 27 10:49:00 KST 2023 Queue Size:[2]
-생산자가 작업(메시지)을 생성합니다 | Queue Size:[3]
-생산자가 작업(메시지)을 생성합니다 | Queue Size:[4]
-생산자가 작업(메시지)을 생성합니다 | Queue Size:[5]
-소비자가 작업(메시지)을 처리합니다 | 생성 시간:Mon Feb 27 10:49:01 KST 2023 Queue Size:[4]
-생산자가 작업(메시지)을 생성합니다 | Queue Size:[5]
-소비자가 작업(메시지)을 처리합니다 | 생성 시간 : Mon Feb 27 10:49:02 KST 2023 Queue Size:[4]
-생산자가 작업(메시지)을 생성합니다 | Queue Size:[5]
-소비자가 작업(메시지)을 처리합니다 | 생성 시간:Mon Feb 27 10:49:03 KST 2023 Queue Size:[4]
-생산자가 작업(메시지)을 생성합니다 | Queue Size:[5]
-소비자가 작업(메시지)을 처리합니다 | 생성 시간 : Mon Feb 27 10:49:04 KST 2023 Queue Size:[4]
+곱할 두 수를 입력하세요 : 
+1 1
+곱할 두 수를 입력하세요 : 
+생산자가 곱셈 결과를 생성합니다 | Queue Size:[1]
+소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:1 Queue Size:[0]
+생산자가 곱셈 결과를 생성합니다(입력한 첫 인수에 +1을 합니다) | Queue Size:[1]
+5 5
+곱할 두 수를 입력하세요 : 
+생산자가 곱셈 결과를 생성합니다 | Queue Size:[2]
+소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:2 Queue Size:[1]
+생산자가 곱셈 결과를 생성합니다(입력한 첫 인수에 +1을 합니다) | Queue Size:[2]
+10 10
+곱할 두 수를 입력하세요 : 
+생산자가 곱셈 결과를 생성합니다 | Queue Size:[3]
+소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:25 Queue Size:[2]
+생산자가 곱셈 결과를 생성합니다(입력한 첫 인수에 +1을 합니다) | Queue Size:[3]
+50 50
+곱할 두 수를 입력하세요 : 
+생산자가 곱셈 결과를 생성합니다 | Queue Size:[4]
+소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:30 Queue Size:[3]
+생산자가 곱셈 결과를 생성합니다(입력한 첫 인수에 +1을 합니다) | Queue Size:[4]
+100 100
+곱할 두 수를 입력하세요 : 
+생산자가 곱셈 결과를 생성합니다 | Queue Size:[5]
+소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:100 Queue Size:[4]
+500 500
+곱할 두 수를 입력하세요 : 
+생산자가 곱셈 결과를 생성합니다 | Queue Size:[5]
+소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:110 Queue Size:[4]
+생산자가 곱셈 결과를 생성합니다(입력한 첫 인수에 +1을 합니다) | Queue Size:[5]
+
 ```
