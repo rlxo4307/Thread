@@ -10,7 +10,7 @@ class Consumer implements Runnable {
     @Override
     public void run() {
         try {
-            Thread.sleep(1001L);
+            Thread.sleep(2001L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
