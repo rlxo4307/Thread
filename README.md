@@ -880,3 +880,87 @@ Process finished with exit code 0
 ```
 main.class의 ExecutorService executor = Executors.newFixedThreadPool(3);
 에 설정한 스레드 3개씩 실행됨을 확인할 수 있다.
+
+
+# Producer & Consumer Pattern (BlockingQueue)
+### Producer
+```javascript
+class Producer implements Runnable {
+    private BlockingQueue queue;
+    public Producer(BlockingQueue queue) {
+        this.queue = queue;
+    }
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(1000L);
+
+            Date d = new Date();
+            String msg = "생성 시간 : "+d.toString();
+            queue.put(msg);
+
+            System.out.println("생산자가 작업(메시지)을 생성합니다 | Queue Size:[" + queue.size() + "]");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            Thread.sleep(1000L);
+
+            Date d = new Date();
+            String msg = "생성 시간:"+d.toString();
+            queue.put(msg);
+
+            System.out.println("생산자가 작업(메시지)을 생성합니다 | Queue Size:[" + queue.size() + "]");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Consumer
+```javascript
+class Consumer implements Runnable {
+    private BlockingQueue queue;
+    public Consumer(BlockingQueue queue) {
+        this.queue = queue;
+    }
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(1001L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        String msg = null;
+        try {
+            msg = (String) queue.take();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("소비자가 작업(메시지)을 처리합니다 | " + msg + " Queue Size:[" + queue.size() + "]");
+    }
+}
+```
+
+### Main (BlockingQueue)
+```javascript
+class Main {
+    public static void main(String[] args) {
+        BlockingQueue queue = new ArrayBlockingQueue(50);
+
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        Producer p = new Producer(queue);
+        Consumer c = new Consumer(queue);
+
+        int i = 0;
+        while(i < 1000) {
+            executor.submit(p);
+            executor.submit(c);
+            i++;
+        }
+        executor.shutdown();
+    }
+}
+```
