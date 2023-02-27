@@ -948,7 +948,7 @@ class Consumer implements Runnable {
 ```javascript
 class Main {
     public static void main(String[] args) {
-        BlockingQueue queue = new ArrayBlockingQueue(20);
+        BlockingQueue queue = new ArrayBlockingQueue(5);
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
         Producer p = new Producer(queue);
@@ -963,4 +963,25 @@ class Main {
         executor.shutdown();
     }
 }
+```
+### 결과
+```javascript
+생산자가 작업(메시지)을 생성합니다 | Queue Size:[1]
+소비자가 작업(메시지)을 처리합니다 | 생성 시간 : Mon Feb 27 10:48:58 KST 2023 Queue Size:[0]
+생산자가 작업(메시지)을 생성합니다 | Queue Size:[1]
+생산자가 작업(메시지)을 생성합니다 | Queue Size:[2]
+소비자가 작업(메시지)을 처리합니다 | 생성 시간:Mon Feb 27 10:48:59 KST 2023 Queue Size:[1]
+생산자가 작업(메시지)을 생성합니다 | Queue Size:[2]
+생산자가 작업(메시지)을 생성합니다 | Queue Size:[3]
+소비자가 작업(메시지)을 처리합니다 | 생성 시간 : Mon Feb 27 10:49:00 KST 2023 Queue Size:[2]
+생산자가 작업(메시지)을 생성합니다 | Queue Size:[3]
+생산자가 작업(메시지)을 생성합니다 | Queue Size:[4]
+생산자가 작업(메시지)을 생성합니다 | Queue Size:[5]
+소비자가 작업(메시지)을 처리합니다 | 생성 시간:Mon Feb 27 10:49:01 KST 2023 Queue Size:[4]
+생산자가 작업(메시지)을 생성합니다 | Queue Size:[5]
+소비자가 작업(메시지)을 처리합니다 | 생성 시간 : Mon Feb 27 10:49:02 KST 2023 Queue Size:[4]
+생산자가 작업(메시지)을 생성합니다 | Queue Size:[5]
+소비자가 작업(메시지)을 처리합니다 | 생성 시간:Mon Feb 27 10:49:03 KST 2023 Queue Size:[4]
+생산자가 작업(메시지)을 생성합니다 | Queue Size:[5]
+소비자가 작업(메시지)을 처리합니다 | 생성 시간 : Mon Feb 27 10:49:04 KST 2023 Queue Size:[4]
 ```
