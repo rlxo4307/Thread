@@ -15,7 +15,7 @@ class Main {
         int a;
         int b;
 
-        for(int i=0; i<1000; i++) {
+        while(true){
             System.out.println("곱할 두 수를 입력하세요 : ");
             a = sc.nextInt();
             b = sc.nextInt();

@@ -16,9 +16,9 @@ class Producer implements Runnable {
     public void run() {
         try {
             Thread.sleep(1000L);
-            int result = this.a * this.b;
+            int result = this.a + this.b;
             queue.add(result);
-            System.out.println("생산자가 곱셈 결과를 생성합니다 | Queue Size:[" + queue.size() + "]");
+            System.out.println("생산자가 덧셈 결과를 생성합니다 | Queue Size:[" + queue.size() + "]");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
