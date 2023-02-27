@@ -3,14 +3,14 @@ package ProducerAndConsumerPattern;
 import java.util.concurrent.BlockingQueue;
 
 class Consumer implements Runnable {
-    private BlockingQueue queue;
+    private final BlockingQueue queue;
     public Consumer(BlockingQueue queue) {
         this.queue = queue;
     }
     @Override
     public void run() {
         try {
-            Thread.sleep(1100L);
+            Thread.sleep(1200L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

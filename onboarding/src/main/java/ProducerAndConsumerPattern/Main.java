@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 
 class Main {
     public static void main(String[] args) {
-        BlockingQueue queue = new ArrayBlockingQueue(5);
+        BlockingQueue queue = new ArrayBlockingQueue(3);
         ExecutorService executor = Executors.newFixedThreadPool(3);
 
         Scanner sc = new Scanner(System.in);
@@ -21,9 +21,10 @@ class Main {
             b = sc.nextInt();
 
             Producer p = new Producer(queue, a, b);
-            executor.submit(p);
-            executor.submit(p);
             Consumer c = new Consumer(queue);
+
+            executor.submit(p);
+            executor.submit(p);
             executor.submit(c);
         }
     }
