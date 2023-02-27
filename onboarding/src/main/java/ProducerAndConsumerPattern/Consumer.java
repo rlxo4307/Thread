@@ -10,7 +10,7 @@ class Consumer implements Runnable {
     @Override
     public void run() {
         try {
-            Thread.sleep(2001L);
+            Thread.sleep(1100L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -21,6 +21,6 @@ class Consumer implements Runnable {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("소비자가 작업(곰셈)을 처리합니다 | 결과:"+ result +" (덧셈결과 * 2, 두 번씩 나타납니다) | "+" Queue Size:["+queue.size()+"]");
+        System.out.println("소비자가 작업(곰셈)을 처리합니다 | 결과:"+ result +" (덧셈결과 * 2, 두 번씩 나타납니다) | "+Thread.currentThread().getName()+" | Queue Size:["+queue.size()+"]");
     }
 }
