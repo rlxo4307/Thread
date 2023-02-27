@@ -22,6 +22,7 @@ class Main {
 
             Producer p = new Producer(queue, a, b);
             executor.submit(p);
+            executor.submit(p);
             Consumer c = new Consumer(queue);
             executor.submit(c);
         }
