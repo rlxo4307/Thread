@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 
 class Main {
     public static void main(String[] args) {
-        BlockingQueue queue = new ArrayBlockingQueue(20);
+        BlockingQueue queue = new ArrayBlockingQueue(5);
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
         Producer p = new Producer(queue);
