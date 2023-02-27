@@ -897,7 +897,7 @@ class Producer implements Runnable {
 
             Date d = new Date();
             String msg = "생성 시간 : "+d.toString();
-            queue.put(msg);
+            queue.add(msg);
 
             System.out.println("생산자가 작업(메시지)을 생성합니다 | Queue Size:[" + queue.size() + "]");
         } catch (InterruptedException e) {
@@ -908,7 +908,7 @@ class Producer implements Runnable {
 
             Date d = new Date();
             String msg = "생성 시간:"+d.toString();
-            queue.put(msg);
+            queue.add(msg);
 
             System.out.println("생산자가 작업(메시지)을 생성합니다 | Queue Size:[" + queue.size() + "]");
         } catch (InterruptedException e) {
@@ -948,7 +948,7 @@ class Consumer implements Runnable {
 ```javascript
 class Main {
     public static void main(String[] args) {
-        BlockingQueue queue = new ArrayBlockingQueue(50);
+        BlockingQueue queue = new ArrayBlockingQueue(20);
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
         Producer p = new Producer(queue);
