@@ -904,14 +904,6 @@ class Producer implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        try {
-            Thread.sleep(1001L);
-            int result = (this.a+1) * this.b;
-            queue.add(result);
-            System.out.println("생산자가 곱셈 결과를 생성합니다(입력한 첫 인수에 +1을 합니다) | Queue Size:[" + queue.size() + "]");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }
 ```
@@ -937,7 +929,7 @@ class Consumer implements Runnable {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("소비자가 작업(곰셈)을 처리합니다 | " + "곱셈 결과:" + result + " Queue Size:[" + queue.size() + "]");
+        System.out.println("소비자가 작업(곰셈)을 처리합니다 | " + "곱셈 결과:" + result +" (두 번씩 나타납니다) | "+ " Queue Size:[" + queue.size() + "]");
     }
 }
 ```
@@ -960,6 +952,7 @@ class Main {
 
             Producer p = new Producer(queue, a, b);
             executor.submit(p);
+            executor.submit(p);
             Consumer c = new Consumer(queue);
             executor.submit(c);
         }
@@ -971,33 +964,28 @@ class Main {
 곱할 두 수를 입력하세요 : 
 1 1
 곱할 두 수를 입력하세요 : 
-생산자가 곱셈 결과를 생성합니다 | Queue Size:[1]
-소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:1 Queue Size:[0]
-생산자가 곱셈 결과를 생성합니다(입력한 첫 인수에 +1을 합니다) | Queue Size:[1]
-5 5
+생산자가 곱셈 결과를 생성합니다 | Queue Size:[2]
+생산자가 곱셈 결과를 생성합니다 | Queue Size:[2]
+소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:1 (두번 씩 나타납니다) |  Queue Size:[1]
+1 2
 곱할 두 수를 입력하세요 : 
 생산자가 곱셈 결과를 생성합니다 | Queue Size:[2]
-소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:2 Queue Size:[1]
-생산자가 곱셈 결과를 생성합니다(입력한 첫 인수에 +1을 합니다) | Queue Size:[2]
-10 10
+생산자가 곱셈 결과를 생성합니다 | Queue Size:[3]
+소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:1 (두번 씩 나타납니다) |  Queue Size:[2]
+1 3
 곱할 두 수를 입력하세요 : 
 생산자가 곱셈 결과를 생성합니다 | Queue Size:[3]
-소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:25 Queue Size:[2]
-생산자가 곱셈 결과를 생성합니다(입력한 첫 인수에 +1을 합니다) | Queue Size:[3]
-50 50
+생산자가 곱셈 결과를 생성합니다 | Queue Size:[4]
+소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:2 (두번 씩 나타납니다) |  Queue Size:[3]
+1 4
 곱할 두 수를 입력하세요 : 
 생산자가 곱셈 결과를 생성합니다 | Queue Size:[4]
-소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:30 Queue Size:[3]
-생산자가 곱셈 결과를 생성합니다(입력한 첫 인수에 +1을 합니다) | Queue Size:[4]
-100 100
+생산자가 곱셈 결과를 생성합니다 | Queue Size:[5]
+소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:2 (두번 씩 나타납니다) |  Queue Size:[4]
+1 5
 곱할 두 수를 입력하세요 : 
 생산자가 곱셈 결과를 생성합니다 | Queue Size:[5]
-소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:100 Queue Size:[4]
-500 500
-곱할 두 수를 입력하세요 : 
-생산자가 곱셈 결과를 생성합니다 | Queue Size:[5]
-소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:110 Queue Size:[4]
-생산자가 곱셈 결과를 생성합니다(입력한 첫 인수에 +1을 합니다) | Queue Size:[5]
+소비자가 작업(곰셈)을 처리합니다 | 곱셈 결과:3 (두번 씩 나타납니다) |  Queue Size:[4]
 ```
 ArrayBlockingQueue에 설정한 Queue 갯수 5개 만큼 queue가 쌓이면
 Queue에 공간이 생길 때 까지 기다리는 것을 확일할 수 있었다.
