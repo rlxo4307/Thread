@@ -900,7 +900,7 @@ class Producer implements Runnable {
             Thread.sleep(1000L);
             int result = this.a + this.b;
             queue.add(result);
-            System.out.println("생산자가 덧셈 결과를 생성합니다 | Queue Size:[" + queue.size() + "]");
+            System.out.println("생산자가 덧셈 결과를 생성합니다 | "+Thread.currentThread().getName()+" | Queue Size:[" + queue.size() + "]");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -918,7 +918,7 @@ class Consumer implements Runnable {
     @Override
     public void run() {
         try {
-            Thread.sleep(2001L);
+            Thread.sleep(1100L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -929,7 +929,7 @@ class Consumer implements Runnable {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        System.out.println("소비자가 작업(곰셈)을 처리합니다 | 결과:"+ result +" (덧셈결과 * 2, 두 번씩 나타납니다) | "+" Queue Size:["+queue.size()+"]");
+        System.out.println("소비자가 작업(곰셈)을 처리합니다 | 결과:"+ result +" (덧셈결과 * 2, 두 번씩 나타납니다) | "+Thread.currentThread().getName()+" | Queue Size:["+queue.size()+"]");
     }
 }
 ```
@@ -939,14 +939,14 @@ class Consumer implements Runnable {
 class Main {
     public static void main(String[] args) {
         BlockingQueue queue = new ArrayBlockingQueue(5);
-        ExecutorService executor = Executors.newFixedThreadPool(2);
+        ExecutorService executor = Executors.newFixedThreadPool(3);
 
         Scanner sc = new Scanner(System.in);
         int a;
         int b;
 
         while(true){
-            System.out.println("곱할 두 수를 입력하세요 : ");
+            System.out.println("더할 두 수를 입력하세요 : ");
             a = sc.nextInt();
             b = sc.nextInt();
 
@@ -961,32 +961,35 @@ class Main {
 ```
 ### 결과
 ```javascript
-곱할 두 수를 입력하세요 : 
+더할 두 수를 입력하세요 : 
 1 1
-곱할 두 수를 입력하세요 : 
-생산자가 덧셈 결과를 생성합니다 | Queue Size:[2]
-생산자가 덧셈 결과를 생성합니다 | Queue Size:[2]
-소비자가 작업(곰셈)을 처리합니다 | 결과:4 (덧셈결과 * 2, 두 번씩 나타납니다) |  Queue Size:[1]
+더할 두 수를 입력하세요 : 
+생산자가 덧셈 결과를 생성합니다 | pool-1-thread-2 | Queue Size:[2]
+생산자가 덧셈 결과를 생성합니다 | pool-1-thread-1 | Queue Size:[2]
+소비자가 작업(곰셈)을 처리합니다 | 결과:4 (덧셈결과 * 2, 두 번씩 나타납니다) | pool-1-thread-3 | Queue Size:[1]
 1 2
-곱할 두 수를 입력하세요 : 
-생산자가 덧셈 결과를 생성합니다 | Queue Size:[2]
-생산자가 덧셈 결과를 생성합니다 | Queue Size:[3]
-소비자가 작업(곰셈)을 처리합니다 | 결과:4 (덧셈결과 * 2, 두 번씩 나타납니다) |  Queue Size:[2]
+더할 두 수를 입력하세요 : 
+생산자가 덧셈 결과를 생성합니다 | pool-1-thread-2 | Queue Size:[2]
+생산자가 덧셈 결과를 생성합니다 | pool-1-thread-1 | Queue Size:[3]
+소비자가 작업(곰셈)을 처리합니다 | 결과:4 (덧셈결과 * 2, 두 번씩 나타납니다) | pool-1-thread-3 | Queue Size:[2]
 1 3
-곱할 두 수를 입력하세요 : 
-생산자가 덧셈 결과를 생성합니다 | Queue Size:[3]
-생산자가 덧셈 결과를 생성합니다 | Queue Size:[4]
-소비자가 작업(곰셈)을 처리합니다 | 결과:6 (덧셈결과 * 2, 두 번씩 나타납니다) |  Queue Size:[3]
+더할 두 수를 입력하세요 : 
+생산자가 덧셈 결과를 생성합니다 | pool-1-thread-2 | Queue Size:[3]
+생산자가 덧셈 결과를 생성합니다 | pool-1-thread-1 | Queue Size:[4]
+소비자가 작업(곰셈)을 처리합니다 | 결과:6 (덧셈결과 * 2, 두 번씩 나타납니다) | pool-1-thread-3 | Queue Size:[3]
 1 4
-곱할 두 수를 입력하세요 : 
-생산자가 덧셈 결과를 생성합니다 | Queue Size:[5]
-생산자가 덧셈 결과를 생성합니다 | Queue Size:[5]
-소비자가 작업(곰셈)을 처리합니다 | 결과:6 (덧셈결과 * 2, 두 번씩 나타납니다) |  Queue Size:[4]
+더할 두 수를 입력하세요 : 
+생산자가 덧셈 결과를 생성합니다 | pool-1-thread-2 | Queue Size:[4]
+생산자가 덧셈 결과를 생성합니다 | pool-1-thread-1 | Queue Size:[5]
+소비자가 작업(곰셈)을 처리합니다 | 결과:6 (덧셈결과 * 2, 두 번씩 나타납니다) | pool-1-thread-3 | Queue Size:[4]
 1 5
-곱할 두 수를 입력하세요 : 
-생산자가 덧셈 결과를 생성합니다 | Queue Size:[5]
-소비자가 작업(곰셈)을 처리합니다 | 결과:8 (덧셈결과 * 2, 두 번씩 나타납니다) |  Queue Size:[4]
+더할 두 수를 입력하세요 : 
+생산자가 덧셈 결과를 생성합니다 | pool-1-thread-1 | Queue Size:[5]
+소비자가 작업(곰셈)을 처리합니다 | 결과:8 (덧셈결과 * 2, 두 번씩 나타납니다) | pool-1-thread-3 | Queue Size:[4]
 1 6
+더할 두 수를 입력하세요 : 
+생산자가 덧셈 결과를 생성합니다 | pool-1-thread-1 | Queue Size:[5]
+소비자가 작업(곰셈)을 처리합니다 | 결과:8 (덧셈결과 * 2, 두 번씩 나타납니다) | pool-1-thread-3 | Queue Size:[4]
 :
 ```
 ArrayBlockingQueue에 설정한 Queue 갯수 5개 만큼 queue가 쌓이면
