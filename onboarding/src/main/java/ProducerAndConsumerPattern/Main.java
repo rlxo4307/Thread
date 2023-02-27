@@ -25,6 +25,5 @@ class Main {
             Consumer c = new Consumer(queue);
             executor.submit(c);
         }
-
     }
 }
