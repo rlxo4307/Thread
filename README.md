@@ -239,18 +239,14 @@ import java.util.concurrent.locks.ReentrantLock;
 
 class Main {
     public static void main(String[] args) throws InterruptedException {
-        SharedObject so = new SharedObject();
-
-        Runnable r1 = new MulThread1(so);
-        Runnable r2 = new MulThread2(so);
-        Thread t1 = new Thread(r1);
-        Thread t2 = new Thread(r2);
+        Thread t1 = new Thread(new MulThread1());
+        Thread t2 = new Thread(new MulThread2());
 
         t1.start();
         t2.start();
-
     }
 }
+
 
 class SharedObject {
     private int money = 0;
@@ -259,12 +255,14 @@ class SharedObject {
         return lock;
     };
     public void add() {
-        lock.lock();
-        System.out.println("입금:" + ++money + " | 1번 스레드");
-        lock.unlock();
+        for(int i=0; i<100; i++) {
+            lock.lock();
+            System.out.println("입금:" + ++money + " | 1번 스레드");
+            lock.unlock();
+        }
     }
     public void sub() {
-        for(int i=0; i<100; i++){
+        for(int i=0; i<100; i++) {
             lock.lock();
             System.out.println("출금:" + --money + " | 2번 스레드");
             lock.unlock();
@@ -272,11 +270,10 @@ class SharedObject {
     }
 }
 
+
 class MulThread1 implements Runnable {
-    SharedObject so;
-    public MulThread1(SharedObject so) {
-        this.so = so;
-    }
+
+    SharedObject so = new SharedObject();
 
     @Override
     public void run() {
@@ -285,10 +282,8 @@ class MulThread1 implements Runnable {
 }
 
 class MulThread2 implements Runnable {
-    SharedObject so;
-    public MulThread2(SharedObject so) {
-        this.so = so;
-    }
+
+    SharedObject so = new SharedObject();
 
     @Override
     public void run() {
@@ -399,30 +394,6 @@ class SharedObject {
         }
     }
 }
-
-class MulThread1 implements Runnable {
-    SharedObject so;
-    public MulThread1(SharedObject so) {
-        this.so = so;
-    }
-
-    @Override
-    public void run() {
-        so.add();
-    }
-}
-
-class MulThread2 implements Runnable {
-    SharedObject so;
-    public MulThread2(SharedObject so) {
-        this.so = so;
-    }
-
-    @Override
-    public void run() {
-        so.getMoney();
-    }
-}
 ```
 ### 결과
 ```javascript
@@ -487,42 +458,33 @@ public class Singleton {
     }
 }
 
-class Main {
-    public static void main(String[] args){
-        SingletonDCL si = SingletonDCL.getInstance();
 
-        Runnable r1 = new MulThread1(si);
-        Runnable r2 = new MulThread2(si);
-        Thread t1 = new Thread(r1);
-        Thread t2 = new Thread(r2);
+public class Main {
+    public static void main(String[] args) {
+        Thread t1 = new Thread(new MulThread1());
+        Thread t2 = new Thread(new MulThread2());
         t1.start();
         t2.start();
     }
 }
 
-class MulThread1 implements Runnable {
-    SingletonDCL si = null;
-    public MulThread1(){}
-    public MulThread1(SingletonDCL si){
-        this.si = si;
-    }
 
+class MulThread1 implements Runnable {
+    public MulThread1(){}
     @Override
-    public void run(){
-        si.add();
+    public void run() {
+        Singleton st = Singleton.getInstance();
+        st.add();
     }
 }
 
-class MulThread2 implements Runnable {
-    SingletonDCL si = null;
-    public MulThread2(){}
-    public MulThread2(SingletonDCL si){
-        this.si = si;
-    }
 
+class MulThread2 implements Runnable {
+    public MulThread2(){}
     @Override
-    public void run(){
-        si.sub();
+    public void run() {
+        Singleton st = Singleton.getInstance();
+        st.sub();
     }
 }
 ```
@@ -689,38 +651,30 @@ synchronized, volatile 키워드 없이 동시성 문제를 해결할 수 있습
 ```javascript
 class Main {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
-
         int i = 0;
         while (i < 1000) {
-            System.out.print("두 수를 입력하세요:");
-            Scanner sc = new Scanner(System.in);
-            Integer a = sc.nextInt();
-            Integer b = sc.nextInt();
-
-            Callable1 c1 = new Callable1(a, b);
+            Callable1 c1 = new Callable1();
             Future<Integer> future = new Future1(c1);
             i += future.get();
-            System.out.println("Only maked by Future : " + i);
-            System.out.println("Future Add Result [("+a+"+"+b+")배로 증가]:" + i);
+            System.out.println("Future Add Result > "+i+" 증가");
             System.out.println();
         }
-
     }
 }
 ```
 ### Callable
 ```javascript
 class Callable1 implements Callable<Integer> {
-    int a;
-    int b;
-    public Callable1(int a, int b){
-        this.a = a;
-        this.b = b;
-    }
+    Integer a, b;
+    public Callable1(){}
+    Scanner sc = new Scanner(System.in);
     @Override
     public Integer call() throws Exception {
-        new Thread().sleep(1500L);
-        Integer result = a + b;
+            System.out.println("더할 두 수를 입력하세요");
+            a = sc.nextInt();
+            b = sc.nextInt();
+            Integer result = a + b;
+            new Thread().sleep(1500L);
         return result;
     }
 }
@@ -728,8 +682,7 @@ class Callable1 implements Callable<Integer> {
 ### Future
 ```javascript
 public class Future1 implements Future<Integer> {
-    int a;
-    int b;
+    int a, b;
     Callable1 c1;
     public Future1(){}
     public Future1(Callable1 c1){
@@ -769,11 +722,19 @@ public class Future1 implements Future<Integer> {
 # Callable / Runnable
 ### main
 ```javascript
-int i = 0;
-while(true) {
-    i += f1.get();
-    System.out.println("Callable Add Result [("+a+"+"+b+")배로 증가]:" + i);
-    new Thread(new Runnable1()).start();
+class Main {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        Callable1 c = new Callable1();
+        FutureTask<Integer> ft = new FutureTask<>(c);
+        ft.run();
+
+        int i = 0;
+            while(true) {
+                i += ft.get();
+                System.out.println("Callable Add Result : " + i);
+                new Thread(new Runnable1()).start();
+            }
+    }
 }
 ```
 ### Runnable
@@ -784,7 +745,7 @@ public class Runnable1 implements Runnable{
     public void run() {
         System.out.println("Runnable Success");
         try {
-            new Thread().sleep(1000);
+            new Thread().sleep(1000L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -799,8 +760,7 @@ class Main {
         ExecutorService executor = Executors.newFixedThreadPool(3);
 
         for (int i = 1; i <= 9; i++) {
-            Runnable r1=new MulRunnable();
-            executor.submit(r1);
+            executor.submit(new MulRunnable());
         }
         executor.shutdown();
     }
