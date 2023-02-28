@@ -3,7 +3,6 @@ package Producer_Consumer_Parttern;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 class Producer implements Runnable{
     private static ExecutorService Thread_Pool = Executors.newFixedThreadPool(2);
     public Producer(){}

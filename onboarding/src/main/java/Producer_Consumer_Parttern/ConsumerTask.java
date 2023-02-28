@@ -1,5 +1,4 @@
 package Producer_Consumer_Parttern;
-
 class ConsumerTask implements Runnable{
     private final int x;
     private final int y;
