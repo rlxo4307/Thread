@@ -843,107 +843,124 @@ main.class의 ExecutorService executor = Executors.newFixedThreadPool(3);
 
 
 # Producer & Consumer Pattern (BlockingQueue)
-### Producer
+### main
 ```javascript
-class Producer implements Runnable {
-    private final BlockingQueue queue;
-    int a;
-    int b;
-    public Producer(BlockingQueue queue, int a, int b) {
-        this.queue = queue;
-        this.a = a;
-        this.b = b;
+class Main {
+    public static void main(String[] args){
+        new Thread(new Producer()).start();
+        new Thread(new Consumer()).start();
     }
-    @Override
-    public void run() {
+}
+```
+메인 함수에서 생산자와 소비자를 실행시킨다
+
+### SharedResource
+```javascript
+class SharedResource {
+    private static final BlockingQueue<ConsumerTask> BQ = new ArrayBlockingQueue(5);
+    public static SharedResource getInstance(){
+        return LazyHolder.INSTANCE;
+    }
+    private static class LazyHolder{
+        private static final SharedResource INSTANCE = new SharedResource();
+    }
+
+    public void put(ConsumerTask CT){
         try {
-            Thread.sleep(1000L);
-            int result = this.a + this.b;
-            queue.put(result);
-            System.out.println("생산자가 덧셈 결과를 생성합니다 | "+Thread.currentThread().getName()+" | Queue Size:[" + queue.size() + "]");
+            BQ.put(CT);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ConsumerTask take(){
+        try {
+            return BQ.take();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }
 ```
+생산자와 소비자 사이에서 BlockingQueue 역할을 할 공유자원인 SharedResource 클래스를 싱글톤으로 생성한다.
+private으로 BlockingQueue 객체를 생성하고,
+Producer에서 put하기 위한 put 함수와 Consumer에서 take 하기 위한 take 함수를 생성한다.
+
+기본적으로 BlockingQueue의 Gerneric은 ConsumerTask 객체를 저장할 것이므로 ConsumerTask로 한다.
+
+### Producer
+```javascript
+class Producer implements Runnable{
+    private static ExecutorService Thread_Pool = Executors.newFixedThreadPool(2);
+    Scanner sc = new Scanner(System.in);
+    @Override
+    public void run(){
+        while(true){
+            System.out.println("더할 두 수를 입력하세요");
+            Thread_Pool.submit(new ProducerTask(sc.nextInt(), sc.nextInt()));
+        }
+    }
+}
+```
+ThreadPool을 private static 으로 소유하게 한 다음
+무한 반복문을 사용해 작업을 지속적으로 생성할 수 있게 한다.
+그리고 ProducerTask를 인자로 submit한다.
+
+### ProducerTask
+```javascript
+class ProducerTask implements Runnable{
+    int x, y;
+    ProducerTask(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+    @Override
+    public void run(){
+        try {
+            Thread.sleep(1000L);
+            System.out.println("생성자가 작업(덧셈)을 생성합니다 | "+Thread.currentThread().getName());
+            SharedResource.getInstance().put(new ConsumerTask(this.x, this.y));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
+getInstance()를 이용해 공유자원의 put함수를 실행하여 전달 받은 인자 2개를 넣어 BlockingQueue에 작업을 생성한다.
 
 ### Consumer
 ```javascript
-class Consumer implements Runnable {
-    private final BlockingQueue queue;
-    public Consumer(BlockingQueue queue) {
-        this.queue = queue;
+class Consumer implements Runnable{
+    private static final ExecutorService Thread_Pool = Executors.newFixedThreadPool(5);
+    @Override
+    public void run(){
+        while(true){
+            Thread_Pool.submit(SharedResource.getInstance().take());
+        }
+    }
+}
+```
+while문을 사용해 공유자원 SharedResource의 BlockingQueue에 작업이 있으면 take()를 submit하여 처리하게 한다.
+
+### ConsumerTask
+```javascript
+class ConsumerTask implements Runnable{
+    private final int x;
+    private final int y;
+    public ConsumerTask(int x, int y){
+        this.x = x;
+        this.y = y;
     }
     @Override
-    public void run() {
+    public void run(){
         try {
-            Thread.sleep(1100L);
+            Thread.sleep(1020L);
+            int result = x + y;
+            System.out.println("소비자가 작업(덧셈)을 처리합니다 | 결과:"+result);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
-
-        int result = 0;
-        try {
-            result = (Integer)queue.take() * 2;
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("소비자가 작업(곰셈)을 처리합니다 | 결과:"+ result +" (덧셈결과 * 2, 두 번씩 나타납니다) | "+Thread.currentThread().getName()+" | Queue Size:["+queue.size()+"]");
-    }
-}
-```
-
-### Main (BlockingQueue)
-```javascript
-class Main {
-    public static void main(String[] args) {
-        BlockingQueue queue = new ArrayBlockingQueue(3);
-        ExecutorService executor = Executors.newFixedThreadPool(3);
-
-        Scanner sc = new Scanner(System.in);
-        int a;
-        int b;
-
-        while(true){
-            System.out.println("더할 두 수를 입력하세요 : ");
-            a = sc.nextInt();
-            b = sc.nextInt();
-
-            Producer p = new Producer(queue, a, b);
-            Consumer c = new Consumer(queue);
-            
-            executor.submit(p);
-            executor.submit(p);
-            executor.submit(c);
         }
     }
 }
 ```
-### 결과
-```javascript
-더할 두 수를 입력하세요 : 
-1 1
-더할 두 수를 입력하세요 : 
-생산자가 덧셈 결과를 생성합니다 | pool-1-thread-1 | Queue Size:[2]
-생산자가 덧셈 결과를 생성합니다 | pool-1-thread-2 | Queue Size:[2]
-소비자가 작업(곰셈)을 처리합니다 | 결과:4 (덧셈결과 * 2, 두 번씩 나타납니다) | pool-1-thread-3 | Queue Size:[1]
-1 2
-더할 두 수를 입력하세요 : 
-생산자가 덧셈 결과를 생성합니다 | pool-1-thread-2 | Queue Size:[2]
-생산자가 덧셈 결과를 생성합니다 | pool-1-thread-1 | Queue Size:[3]
-소비자가 작업(곰셈)을 처리합니다 | 결과:4 (덧셈결과 * 2, 두 번씩 나타납니다) | pool-1-thread-3 | Queue Size:[2]
-1 3
-더할 두 수를 입력하세요 : 
-생산자가 덧셈 결과를 생성합니다 | pool-1-thread-2 | Queue Size:[3]
-소비자가 작업(곰셈)을 처리합니다 | 결과:6 (덧셈결과 * 2, 두 번씩 나타납니다) | pool-1-thread-3 | Queue Size:[2]
-생산자가 덧셈 결과를 생성합니다 | pool-1-thread-1 | Queue Size:[3]
-1 4
-더할 두 수를 입력하세요 : 
-소비자가 작업(곰셈)을 처리합니다 | 결과:6 (덧셈결과 * 2, 두 번씩 나타납니다) | pool-1-thread-1 | Queue Size:[2]
-생산자가 덧셈 결과를 생성합니다 | pool-1-thread-2 | Queue Size:[3]
-1 5
-더할 두 수를 입력하세요 :
-```
-3번째 입력을 한 후 BlockingQueue가 3으로 가득 찬 후, Consumer가 실행되지 않아 프로그램이 진행되지 않는 것을 확인.
-= ArrayBlockingQueue에 설정한 Queue 갯수 만큼 queue가 쌓이면 Queue에 공간이 생길 때 까지 take()를 기다리는 것을 확인할 수 있었다.
+작업을 저장하는 자료형이자 작업을 처리하는 클래스
