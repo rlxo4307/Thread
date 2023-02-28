@@ -5,7 +5,6 @@ import java.util.concurrent.Executors;
 
 class Consumer implements Runnable{
     private static final ExecutorService Thread_Pool = Executors.newFixedThreadPool(5);
-    public Consumer(){}
     @Override
     public void run(){
         while(true){

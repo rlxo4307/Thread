@@ -4,7 +4,6 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 class SharedOjbect {
     private static final BlockingQueue<ConsumerTask> BQ = new ArrayBlockingQueue(5);
-    private SharedOjbect(){}
     public static SharedOjbect getInstance(){
         return LazyHolder.INSTANCE;
     }

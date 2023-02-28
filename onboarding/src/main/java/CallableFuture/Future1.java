@@ -6,8 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class Future1 implements Future<Integer> {
-    int a;
-    int b;
+    int a, b;
     Callable1 c1;
     public Future1(){}
     public Future1(Callable1 c1){
