@@ -30,4 +30,3 @@ class ConsumerTask implements Runnable{
         System.out.println("소비자가 작업을 처리합니다 > 결과:" + Thread.currentThread().getName() + " : " + result);
     }
 }
-
