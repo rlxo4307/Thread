@@ -6,3 +6,4 @@ class Main {
         new Thread(new Producer()).start();
     }
 }
+

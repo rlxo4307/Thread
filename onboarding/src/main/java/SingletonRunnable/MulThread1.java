@@ -7,3 +7,4 @@ class MulThread1 implements Runnable {
         st.add();
     }
 }
+

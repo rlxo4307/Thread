@@ -10,6 +10,7 @@ class SingletonLazyHolder {
     }
     private int money = 0;
     public synchronized void add(){
-        System.out.println(" 입금:" + ++money);
+        System.out.println("입금:" + ++money);
     }
 }
+

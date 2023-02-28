@@ -9,3 +9,4 @@ class SharedObject{
         System.out.println("출금:" + --money + " | 2번 스레드");
     }
 }
+

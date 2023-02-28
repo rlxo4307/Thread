@@ -5,3 +5,4 @@ class Main {
         new Thread(new Consumer()).start();
     }
 }
+

@@ -10,3 +10,4 @@ class MulThread2 implements Runnable {
         }
     }
 }
+
