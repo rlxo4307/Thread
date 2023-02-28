@@ -8,7 +8,7 @@ class Consumer implements Runnable{
     @Override
     public void run(){
         while(true){
-            Thread_Pool.submit(SharedOjbect.getInstance().take());
+            Thread_Pool.submit(SharedResource.getInstance().take());
         }
     }
 }

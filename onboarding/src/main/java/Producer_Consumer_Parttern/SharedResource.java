@@ -2,13 +2,13 @@ package Producer_Consumer_Parttern;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-class SharedOjbect {
+class SharedResource {
     private static final BlockingQueue<ConsumerTask> BQ = new ArrayBlockingQueue(5);
-    public static SharedOjbect getInstance(){
+    public static SharedResource getInstance(){
         return LazyHolder.INSTANCE;
     }
     private static class LazyHolder{
-        private static final SharedOjbect INSTANCE = new SharedOjbect();
+        private static final SharedResource INSTANCE = new SharedResource();
     }
 
     public void put(ConsumerTask CT){
