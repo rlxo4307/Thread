@@ -12,7 +12,7 @@ class ProducerTask implements Runnable{
     public void run(){
         try {
             Thread.sleep(1000L);
-            System.out.println("생성자가 작업((사칙연산)을 생성합니다 | "+Thread.currentThread().getName());
+            System.out.println("생성자가 작업(사칙연산)을 생성합니다 | "+Thread.currentThread().getName());
             SharedResource.getInstance().put(new ConsumerTask(this.x, this.y, this.z, this.state));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
