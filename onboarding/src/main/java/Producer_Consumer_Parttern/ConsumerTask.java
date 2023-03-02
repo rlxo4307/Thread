@@ -25,7 +25,12 @@ class ConsumerTask implements Runnable{
                 break;
             case 3: result = this.x * this.y;
                 break;
-            case 4: result = (Integer)(this.x / this.y);
+            case 4:
+                if(this.y == 0){
+                    state = "zero divide";
+                }else {
+                    result = (Integer) (this.x / this.y);
+                }
                 break;
             default:
                 state = "fail";
@@ -34,6 +39,8 @@ class ConsumerTask implements Runnable{
             System.out.println("소비자가 작업을 처리합니다 > 결과:" + Thread.currentThread().getName() + " : " + result);
         }else if(state.equals("fail")){
             System.out.println("소비자가 작업을 처리합니다 > 사칙연산을 잘못 선택했습니다 | " + Thread.currentThread().getName());
+        }else if(state.equals("zero divide")){
+            System.out.println("소비자가 작업을 처리합니다 > 나눗셈 분모가 0입니다 | " + Thread.currentThread().getName());
         }
     }
 }
