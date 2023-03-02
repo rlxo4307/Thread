@@ -38,7 +38,7 @@ class ConsumerTask implements Runnable{
         if(state.equals("success")){
             System.out.println("소비자가 작업을 처리합니다 > 결과:" + Thread.currentThread().getName() + " : " + result);
         }else if(state.equals("fail")){
-            System.out.println("소비자가 작업을 처리합니다 > 사칙연산을 잘못 선택했습니다 | " + Thread.currentThread().getName());
+            System.out.println("소비자가 작업을 처리합니다 > 연산을 잘못 선택했습니다 | " + Thread.currentThread().getName());
         }else if(state.equals("zero divide")){
             System.out.println("소비자가 작업을 처리합니다 > 나눗셈 분모가 0입니다 | " + Thread.currentThread().getName());
         }
