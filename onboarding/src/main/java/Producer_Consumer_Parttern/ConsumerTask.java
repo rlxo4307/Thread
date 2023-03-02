@@ -3,10 +3,12 @@ class ConsumerTask implements Runnable{
     private final int x;
     private final int y;
     private final int z;
-    public ConsumerTask(int x, int y, int z) {
+    private String state;
+    public ConsumerTask(int x, int y, int z, String state) {
         this.x = x;
         this.y = y;
         this.z = z;
+        this.state = state;
     }
     @Override
     public void run() {
@@ -26,7 +28,12 @@ class ConsumerTask implements Runnable{
             case 4: result = (Integer)(this.x / this.y);
                 break;
             default:
+                state = "fail";
         }
-        System.out.println("소비자가 작업을 처리합니다 > 결과:" + Thread.currentThread().getName() + " : " + result);
+        if(state.equals("success")){
+            System.out.println("소비자가 작업을 처리합니다 > 결과:" + Thread.currentThread().getName() + " : " + result);
+        }else{
+            System.out.println("소비자가 작업을 처리합니다 > 사칙연산을 잘못 선택했습니다 | " + Thread.currentThread().getName());
+        }
     }
 }

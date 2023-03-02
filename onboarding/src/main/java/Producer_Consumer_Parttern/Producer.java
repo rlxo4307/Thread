@@ -10,7 +10,7 @@ class Producer implements Runnable{
     public void run(){
         while(true){
             System.out.println("두 수와 연산을 입력하세요(덧셉:1, 뺼셈:2, 곱셈:3, 나눗셈:4):");
-            Thread_Pool.submit(new ProducerTask(sc.nextInt(), sc.nextInt(), sc.nextInt()));
+            Thread_Pool.submit(new ProducerTask(sc.nextInt(), sc.nextInt(), sc.nextInt(),"success"));
         }
     }
 }
