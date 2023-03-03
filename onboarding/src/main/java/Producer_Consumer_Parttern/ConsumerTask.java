@@ -17,24 +17,16 @@ class ConsumerTask implements Runnable{
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
         int result = 0;
-        switch(z) {
-            case 1: result = this.x + this.y;
-                break;
-            case 2: result = this.x - this.y;
-                break;
-            case 3: result = this.x * this.y;
-                break;
-            case 4:
-                if(this.y == 0){
-                    state = "zero divide";
-                }else {
-                    result = (Integer) (this.x / this.y);
-                }
-                break;
-            default:
-                state = "fail";
-        }
+
+        if(z == 1) result = this.x + this.y;
+        if(z == 2) result = this.x - this.y;
+        if(z == 3) result = this.x * this.y;
+        if(z == 4 && this.y == 0) state = "zero divide";
+        if(z == 4 && this.y != 0) result = (Integer) (this.x / this.y);
+        if(z < 1 && z > 4) state = "fail";
+
         if(state.equals("success")){
             System.out.println("소비자가 작업을 처리합니다 > 결과:" + Thread.currentThread().getName() + " : " + result);
         }else if(state.equals("fail")){
