@@ -9,14 +9,14 @@ class 모든원시값과문자열을포장한다_sol {
 class Annual_Income {
     private int money;
     public Annual_Income(final int money) {
-        validatePositiveGainMoney(money);
+        validatePositiveEarnMoney(money);
         this.money = money;
     }
     public Annual_Income changeMoney(final int money){
         return new Annual_Income(money + money);
     }
-    private void validatePositiveGainMoney(int gainMoney) {
-        if (gainMoney <= 0) {
+    private void validatePositiveEarnMoney(int earnMoney) {
+        if (earnMoney <= 0) {
             throw new IllegalArgumentException();
         }
     }
