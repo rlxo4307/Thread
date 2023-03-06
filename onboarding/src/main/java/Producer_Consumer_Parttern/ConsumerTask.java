@@ -32,6 +32,7 @@ class ConsumerTask implements Runnable{
             state = "fail";
             System.out.println("소비자가 작업을 처리합니다 > 연산을 잘못 선택했습니다 | " + Thread.currentThread().getName());
         }
-        if(state.equals("success")) System.out.println("소비자가 작업을 처리합니다 > 결과:" + Thread.currentThread().getName() + " : " + result);
+        if(state.equals("success"))
+            System.out.println("소비자가 작업을 처리합니다 > 결과:" + Thread.currentThread().getName() + " : " + result);
     }
 }
