@@ -8,7 +8,6 @@ class getterSetterProperty를쓰지않는다 {
         }
     }
 }
-
 class Test1{
     private double bmi = 20.0;
     double getBmi(){
