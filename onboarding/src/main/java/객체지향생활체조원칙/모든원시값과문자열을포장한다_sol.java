@@ -7,13 +7,13 @@ class 모든원시값과문자열을포장한다_sol {
 }
 
 class Annual_Income {
-    private int money;
-    public Annual_Income(final int money) {
-        validatePositiveEarnMoney(money);
-        this.money = money;
+    private int earnMoney;
+    public Annual_Income(final int earnMoney) {
+        validatePositiveEarnMoney(earnMoney);
+        this.earnMoney = earnMoney;
     }
     public Annual_Income changeMoney(final int money){
-        return new Annual_Income(money + money);
+        return new Annual_Income(earnMoney + money);
     }
     private void validatePositiveEarnMoney(int earnMoney) {
         if (earnMoney <= 0) {
