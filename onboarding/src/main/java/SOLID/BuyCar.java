@@ -6,7 +6,7 @@ class BuyCar {
     public BuyCar(int num){
         this.num = num;
     }
-    public Car getCar(){
+    public Car getSpeed(){
         if(this.num == 1) new Sonata().speed();
         if(this.num == 2) new Avante().speed();
         return new Sonata();

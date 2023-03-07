@@ -5,7 +5,7 @@ class Avante implements Car{
 
     @Override
     public void speed(){
-        System.out.println("아반테는 2순위 스피드를 가졌다");
+        System.out.println("2위의 스피드를 가진 자동차는 아반떼이다");
     }
 
 }
