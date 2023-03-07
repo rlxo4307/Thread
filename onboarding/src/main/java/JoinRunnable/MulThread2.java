@@ -7,9 +7,6 @@ class MulThread2 implements Runnable {
     }
     @Override
     public void run() {
-        for(int i=0; i<100; i++) {
-            so.sub();
-            System.out.println(" | 2번 스레드");
-        }
+        so.sub();
     }
 }
