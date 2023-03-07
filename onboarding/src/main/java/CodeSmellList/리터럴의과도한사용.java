@@ -20,7 +20,6 @@ class 리터럴의과도한사용 {
         }
         if(rank==none) {
             System.out.println("다음 기회가 있습니다.");
-            return;
         }
     }
 
