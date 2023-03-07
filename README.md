@@ -963,6 +963,43 @@ class ConsumerTask implements Runnable{
     }
 }
 ```
+### Producer & Consumer Pattern (BlockingQueue) 요약
+ThreadPool과 BlockingQueue를 이용해 생산자–소비자 패턴의 프로그램을 구현할 수 있다. 
+
+BlockingQueue라는 작업 저장 장소를 Lazyholder 방식으로 구현해 공유 객체로 만들고 put, take등의 메서드를 공유 메서드로 구현한다.
+그리고 Producer 클래스에서 반복문을 이용해 ProducerTask를 submit한 후,
+ProducerTask에서 ConsumerTask를 BlockingQueue에 put하여 작업을 생성한다.
+
+Consumer에서는 BlockingQueue의 take함수를 실행해 Producer에서 생성한 작업을 실행한다.
+그러면 ConsumerTake에 작성한 작업 실행 구문이 실행된다.
+이렇게 작업의 생성과 실행을 분리하여 프로그램 구현을 한 패턴을 생성자-소비자 패턴이라고 한다.
+
+### visualVM
+intellij와 연동하여 프로그램 시작 시,
+Heap 영역의 메모리 사용 현황과 Live Thread, Daemon thread 사용 현황을 확인할 수 있다.
+
+
+### JVM memory structure
+Java memory 구조 중 Runtime Data Area는 5개의 영역으로 나뉜다.
+
+1. Method 영역
+모든 Thread가 공유하는 영역이며, class, interface, meothd, field, statc 변수 등을 보관한다.
+그리고 Heap 영역에 생성할 class 객체가 참조할 원본 class가 저장된다.
+
+2. Heap 영역
+모든 Thread가 공유하는 영역이며 객체, 배열이 생성되고, 
+Method 영역에 선언된 class만 생성이 가능하다.
+또한 Garbage Collector가 참조되지 않은 메모리를 제거한다.
+
+3. Stack 영역
+메서드 호출 시마다 스택 프레임이 호출되어 메서드가 종료되면 스텍 프레임이 마지막에 호출된 메서드 기준으로 삭제된다.
+
+4. PC 레지스터
+Thread가 생성될 때 생성되는 공간이며 Thread 마다 하나씩 존재한다. 
+Thread가 어떤 부분을 무슨 명령으로 실행해야 할 지에 대한 기록을 하는 부분으로 현재 수행중인 JVM 명령의 주소를 갖는다.
+ 
+5. Native method stack
+자바 외 언어로 작성된 네이티브 코드를 위한 메모리 영역
 작업을 저장하는 자료형이자 작업을 처리하는 클래스
 
 
@@ -995,8 +1032,7 @@ class ConsumerTask implements Runnable{
 하는 만큼 비용이 많이 들 수 있다. 그만큼 계획이 중요하고 실제 프로젝트에서는 이상적이라는 비판이 있다.
 그리고 실제로는 여러 요소로 인해 요구 사항이 변경되는 경우가 생기기 때문에 폭포수 유형은 적절하지 못할 수 있다.
 
-[연관]
-### DDD(Domain Driven Development, 도메인 주도 개발)
+### [연관] DDD(Domain Driven Development, 도메인 주도 개발)
 순수하게 모델과 로직에 집중하는 것으로,
 커뮤니케이션에 있어서 분석, 설계, 구현 단계에 이르기까지 통일된 방식으로 협업이 가능하다.
 규칙이 동일하여 통일된 방식으로 커뮤니케이션을 한다.
@@ -1026,8 +1062,7 @@ DDD 방식으로 진행한다고 보기도 한다.
 고객의 요구 사항 및 계획이 크게 변경되면 모델이 무너질 수 있다.
 개인이 아닌 팀이 중심이 되다 보니 회의, 로그 등 공통으로 해야 할 작업이 많을 수 있다.
 
-[연관]
-### TDD(Test-Driven Development, 테스트 주도 개발)
+### [연관] TDD(Test-Driven Development, 테스트 주도 개발)
 테스트를 중요시 하는 개발 방법론.
 
 ![TDD2.png](/files/212) 
