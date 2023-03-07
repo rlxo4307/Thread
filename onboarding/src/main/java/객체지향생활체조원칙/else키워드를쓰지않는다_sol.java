@@ -26,7 +26,6 @@ class else키워드를쓰지않는다_sol {
         }
         if (num == 6) {
             System.out.println("주사위 숫자는 5");
-            return;
         }
     }
 }
