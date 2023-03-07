@@ -1005,8 +1005,8 @@ Thread가 어떤 부분을 무슨 명령으로 실행해야 할 지에 대한 �
 
 # 소프트웨어 개발 방법론
 ## 폭포수 방법론
-![Screen_Shot_2014-06-30_at_9.45.59_PM.png](..%2F..%2FDesktop%2Fimage%2FScreen_Shot_2014-06-30_at_9.45.59_PM.png)
 
+![Screen_Shot_2014-06-30_at_9.45.59_PM.png](C:\Users\DIQUEST\IdeaProjects\SEASON2_HGT\Screen_Shot_2014-06-30_at_9.45.59_PM.png)
 [진행 순서]
 1. 소프트웨어 요구 사항 기술
 2. 소프트웨어 설계
@@ -1046,7 +1046,7 @@ Thread가 어떤 부분을 무슨 명령으로 실행해야 할 지에 대한 �
 작업 계획을 짧은 단위로 세우고 제품을 만들며 고쳐 나가는 사이클을 반복함으로써 
 고객의 요구 변화에 유연하고도 신속하게 대응하는 개발 방법론이다.
 
-![img.png](..%2F..%2FDesktop%2Fimage%2Fimg.png)
+![img.png](C:\Users\DIQUEST\IdeaProjects\SEASON2_HGT\img.png)
 [진행 순서]
 (주문 -> 디자인 -> 기능구현 -> 테스팅 -> 배포) * N회 반복
 
@@ -1066,7 +1066,7 @@ Thread가 어떤 부분을 무슨 명령으로 실행해야 할 지에 대한 �
 
 ### [연관] TDD(Test-Driven Development, 테스트 주도 개발)
 테스트를 중요시 하는 개발 방법론.
-![TDD2.png](..%2F..%2FDesktop%2Fimage%2FTDD2.png)
+![TDD2.png](C:\Users\DIQUEST\IdeaProjects\SEASON2_HGT\TDD2.png)
 실패하는 테스트 코드를 실제 코드보다 먼저 작성한 후, 
 작성한 실패한 테스트 코드를 통과할 정도의 실제 코드를 작성한다.
 
