@@ -23,15 +23,15 @@ class ConsumerTask implements Runnable{
         if(sign == 3) result = this.x * this.y;
         if(sign == 4 && this.y != 0) result = (Integer) (this.x / this.y);
         if(sign == 4 && this.y == 0) {
-            System.out.println("소비자가 작업을 처리합니다 > 나눗셈 분모가 0입니다 | " + Thread.currentThread().getName());
+            System.out.println("소비자가 작업을 처리합니다 | 나눗셈 분모가 0입니다 | " + Thread.currentThread().getName());
             return;
         }
         if(sign == 1 || sign == 2 || sign == 3 || sign == 4) {
-            System.out.println("소비자가 작업을 처리합니다 > 결과:" + Thread.currentThread().getName() + " : " + result);
+            System.out.println("소비자가 작업을 처리합니다 | 결과:" + result +" | " + Thread.currentThread().getName());
             return;
         }
-        if(sign < 1 && sign > 4) {
-            System.out.println("소비자가 작업을 처리합니다 > 연산을 잘못 선택했습니다 | " + Thread.currentThread().getName());
+        if(sign != 1 && sign != 2 && sign != 3 && sign != 4) {
+            System.out.println("소비자가 작업을 처리합니다 | 연산을 잘못 선택했습니다 | " + Thread.currentThread().getName());
             return;
         }
     }
