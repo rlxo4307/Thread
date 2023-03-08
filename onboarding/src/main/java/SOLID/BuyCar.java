@@ -1,14 +1,14 @@
 package SOLID;
 
 class BuyCar {
-    int num;
+    private int num;
     Sonata sonata;
     public BuyCar(int num){
         this.num = num;
+        ment();
     }
-    public Car getSpeed(){
-        if(this.num == 1) new Sonata().speed();
-        if(this.num == 2) new Avante().speed();
-        return new Sonata();
+    public void ment(){
+        if(this.num == 1) new Sonata().buy();
+        if(this.num == 2) new Avante().buy();
     }
 }

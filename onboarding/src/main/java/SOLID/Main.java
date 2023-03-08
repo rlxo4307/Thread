@@ -1,6 +1,6 @@
 package SOLID;
 class Main {
     public static void main(String[] args) {
-        new BuyCar(2).getSpeed();
+        new BuyCar(1);
     }
 }

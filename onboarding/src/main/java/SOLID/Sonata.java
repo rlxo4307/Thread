@@ -4,8 +4,8 @@ class Sonata implements Car{
     public Sonata(){}
 
     @Override
-    public void speed(){
-        System.out.println("1위의 스피드를 가진 자동차는 소나타이다");
+    public void buy(){
+        System.out.println("소나타를 구매해 주셔서 감사합니다.");
     }
 
 }

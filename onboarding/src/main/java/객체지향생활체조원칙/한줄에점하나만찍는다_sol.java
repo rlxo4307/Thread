@@ -3,7 +3,7 @@ package 객체지향생활체조원칙;
  class 한줄에점하나만찍는다_sol {
      private static void main(String[] args) {
          Korea2 ko = new Korea2(new Name2());
-         ko.koreaName();
+         System.out.println(ko.koreaName());
      }
  }
 
