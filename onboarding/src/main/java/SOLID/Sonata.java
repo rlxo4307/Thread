@@ -6,3 +6,5 @@ class Sonata implements Car{
         System.out.println("Sonata를 구매해 주셔서 감사합니다.");
     }
 }
+
+

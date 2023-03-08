@@ -14,3 +14,5 @@ class BuyCar {
         if(this.num == 2) new Avante().buy();
     }
 }
+
+
