@@ -1,7 +1,6 @@
 package SOLID;
 
 import java.util.Scanner;
-
 class BuyCar {
     private int num;
     Scanner sc = new Scanner(System.in);
