@@ -8,12 +8,12 @@ package 객체지향생활체조원칙;
  }
 
 class Korea2 {
-    private final Name2 korea;
-    Korea2(Name2 korea) {
-        this.korea = korea;
+    private final Name2 name;
+    Korea2(Name2 name) {
+        this.name = name;
     }
     String koreaName(){
-        return korea.get();
+        return name.get();
     }
 }
 
