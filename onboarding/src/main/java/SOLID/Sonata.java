@@ -1,5 +1,4 @@
 package SOLID;
-
 class Sonata implements Car{
     public Sonata(){}
 
