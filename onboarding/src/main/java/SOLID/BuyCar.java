@@ -2,7 +2,6 @@ package SOLID;
 
 class BuyCar {
     private int num;
-    Sonata sonata;
     public BuyCar(int num){
         this.num = num;
         ment();
