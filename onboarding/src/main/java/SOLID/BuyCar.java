@@ -1,9 +1,13 @@
 package SOLID;
 
+import java.util.Scanner;
+
 class BuyCar {
     private int num;
-    public BuyCar(int num){
-        this.num = num;
+    Scanner sc = new Scanner(System.in);
+    public BuyCar(){
+        System.out.print("구매할 차량 번호를 입력하세요:");
+        this.num = sc.nextInt();
         ment();
     }
     public void ment(){

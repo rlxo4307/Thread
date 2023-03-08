@@ -5,7 +5,7 @@ class Avante implements Car{
 
     @Override
     public void buy(){
-        System.out.println("아반떼를 구매해 주셔서 감사합니다.");
+        System.out.println("Avante 구매해 주셔서 감사합니다.");
     }
 
 }
