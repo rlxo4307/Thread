@@ -2,6 +2,7 @@
 ## 폭포수 방법론
 
 ![Water_Fall](C:\Users\DIQUEST\IdeaProjects\SEASON2_HGT\onboarding\image\Water_Fall.png)
+
 [진행 순서]
 1. 소프트웨어 요구 사항 기술
 2. 소프트웨어 설계
@@ -42,6 +43,7 @@
 고객의 요구 변화에 유연하고도 신속하게 대응하는 개발 방법론이다.
 
 ![Agile](C:\Users\DIQUEST\IdeaProjects\SEASON2_HGT\onboarding\image\Agile.png)
+
 [진행 순서]
 (주문 -> 디자인 -> 기능구현 -> 테스팅 -> 배포) * N회 반복
 
