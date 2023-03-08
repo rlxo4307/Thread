@@ -1,7 +1,7 @@
 # 소프트웨어 개발 방법론
 ## 폭포수 방법론
 
-![Water_Fall.png](C:\Users\DIQUEST\IdeaProjects\SEASON2_HGT\onboarding\image\Water_Fall.png "Water_Fall.png")
+![Water_Fall.png](C:\Users\DIQUEST\IdeaProjects\SEASON2_HGT\onboarding\image\Water_Fall.png)
 
 [진행 순서]
 1. 소프트웨어 요구 사항 기술
@@ -64,7 +64,7 @@
 ### [연관] TDD(Test-Driven Development, 테스트 주도 개발)
 테스트를 중요시 하는 개발 방법론.
 
-![TDD.png](C:\Users\DIQUEST\IdeaProjects\SEASON2_HGT\onboarding\image\TDD.png "TDD.png")
+![img.png](img.png)
 
 실패하는 테스트 코드를 실제 코드보다 먼저 작성한 후, 
 작성한 실패한 테스트 코드를 통과할 정도의 실제 코드를 작성한다.
