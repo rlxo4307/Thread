@@ -15,5 +15,3 @@ class CarList {
         return this.list;
     }
 }
-
-
