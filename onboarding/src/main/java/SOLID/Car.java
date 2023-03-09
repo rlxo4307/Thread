@@ -1,5 +1,5 @@
 package SOLID;
 
 interface Car {
-    abstract String getName();
+    abstract String toString();
 }

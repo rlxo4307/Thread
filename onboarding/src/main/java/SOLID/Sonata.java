@@ -2,10 +2,10 @@ package SOLID;
 class Sonata implements Car{
     private String name = "Sonata";
     public Sonata(){
-        getName();
+        toString();
     }
     @Override
-    public String getName(){
+    public String toString(){
         return name;
     }
 }

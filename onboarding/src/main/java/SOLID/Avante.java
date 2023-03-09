@@ -3,10 +3,10 @@ package SOLID;
 class Avante implements Car{
     private String name = "Avante";
     public Avante(){
-        getName();
+        toString();
     }
     @Override
-    public String getName(){
+    public String toString(){
         return name;
     }
 }
