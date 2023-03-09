@@ -5,4 +5,3 @@ class Main {
         new Buy();
     }
 }
-
