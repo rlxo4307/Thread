@@ -1,10 +1,10 @@
 package 코드스멜;
 
 class 순환복잡도 {
-    public static void main(String[] main){
+    private static void main(String[] main){
         int num = 0;
 
-        for(int i=0; i<=10; i++){
+        for(int i=1; i<=10; i++){
             num += i;
             if(num == 55){
                 for(int j=11; j<=100; j++){
