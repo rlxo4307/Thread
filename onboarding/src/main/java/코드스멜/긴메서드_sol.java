@@ -26,3 +26,4 @@ class 긴메서드_sol {
         return state;
     }
 }
+
