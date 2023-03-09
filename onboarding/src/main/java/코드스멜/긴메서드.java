@@ -1,7 +1,13 @@
 package 코드스멜;
 
 class 긴메서드 {
-    void bmi(int tall, int kg){
+    private int tall;
+    private int kg;
+    public 긴메서드(int tall, int kg){
+        this.tall = tall;
+        this.kg = kg;
+    }
+    public void bmi(int tall, int kg){
         double result = kg / (tall*tall);
         String state;
 
