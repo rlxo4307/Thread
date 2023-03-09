@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CarList {
-    private List<String> list = new ArrayList<>();
+    private final List<String> list = new ArrayList<>();
     public CarList(){
         this.list.add("Sonata");
         this.list.add("Avante");
