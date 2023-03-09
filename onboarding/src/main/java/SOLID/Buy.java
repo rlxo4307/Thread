@@ -2,11 +2,11 @@ package SOLID;
 
 import java.util.List;
 import java.util.Scanner;
-class BuyCar {
+class Buy {
     Scanner sc = new Scanner(System.in);
     private List<Car> carList;
 
-    public BuyCar(){
+    public Buy(){
         this.carList = new CarList().getList();
 
         for(int i=1; i<=carList.size(); i++){
