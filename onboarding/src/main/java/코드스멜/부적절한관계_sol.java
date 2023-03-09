@@ -5,3 +5,4 @@ class 부적절한관계_sol {
         System.out.println("PT를 시작하기에 앞서 bmi를 측정하겠습니다.");
     }
 }
+

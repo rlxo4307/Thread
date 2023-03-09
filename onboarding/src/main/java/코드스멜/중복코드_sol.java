@@ -5,3 +5,4 @@ class 중복코드_sol {
         System.out.println(species + "의 다리 갯수는:" + leg + "개 입니다.");
     }
 }
+

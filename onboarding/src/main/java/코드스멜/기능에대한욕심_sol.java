@@ -8,3 +8,4 @@ class 기능에대한욕심_sol {
         System.out.println("나의 bmi는 "+bmi+"이다.");
     }
 }
+

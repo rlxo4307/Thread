@@ -17,3 +17,4 @@ class 순환복잡도_sol {
             System.out.println("1부터 100까지 더한 값:" + num);
     }
 }
+

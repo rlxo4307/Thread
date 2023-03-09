@@ -12,3 +12,4 @@ class 커다란클래스_sol {
         return result;
     }
 }
+

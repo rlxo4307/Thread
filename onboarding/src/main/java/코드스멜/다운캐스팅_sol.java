@@ -6,3 +6,4 @@ class 다운캐스팅_sol {
     다운캐스팅 downBmi = (다운캐스팅)upBmi;
     double bmi = downBmi.bmi(178, 66);
 }
+

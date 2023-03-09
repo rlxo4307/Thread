@@ -6,3 +6,4 @@ class 고아변수또는컨스턴트클래스_sol {
         System.out.println("폐점한 가게의 손님 수:" + people);
     }
 }
+
