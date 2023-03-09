@@ -27,3 +27,26 @@ class 너무많은매개변수_sol {
     }
 }
 
+class Attack{
+    private int goals;
+    private int dribbles;
+    public Attack(int goals, int dribbles){
+        this.goals = goals;
+        this.dribbles = dribbles;
+    }
+    public int score(){
+        return this.goals + this.dribbles;
+    }
+}
+
+class Defense{
+    private int defense;
+    private int blocking;
+    public Defense(int defense, int blocking){
+        this.defense = defense;
+        this.blocking = blocking;
+    }
+    public int score(){
+        return this.defense + this.blocking;
+    }
+}

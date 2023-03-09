@@ -24,3 +24,12 @@ class 리터럴의과도한사용_sol {
     }
 }
 
+class Player{
+    private String medal;
+    public Player(String medal){
+        this.medal = medal;
+    }
+    public String rank(){
+        return medal;
+    }
+}
