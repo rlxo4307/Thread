@@ -3,10 +3,8 @@ package SOLID;
 import java.util.List;
 import java.util.Scanner;
 class BuyCar {
-
-    private List<Car> list;
-
     Scanner sc = new Scanner(System.in);
+    private List<Car> list;
 
     public BuyCar(){
         this.list = new CarList().getList();
@@ -18,7 +16,7 @@ class BuyCar {
         ment(sc.nextInt());
     }
 
-    public void ment(int num){
-        System.out.println(list.get(num-1)+"을(를) 구매해 주셔서 감사합니다.");
+    public void ment(int carNumber){
+        System.out.println(list.get(carNumber-1)+"을(를) 구매해 주셔서 감사합니다.");
     }
 }
