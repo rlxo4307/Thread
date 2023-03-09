@@ -6,8 +6,7 @@ import java.util.List;
 class CarList {
     private List<Car> list;
     public CarList(){
-        List<Car> list = new ArrayList<>();
-        this.list = list;
+        this.list = new ArrayList<>();
         this.list.add(new Avante());
         this.list.add(new Sonata());
     }
