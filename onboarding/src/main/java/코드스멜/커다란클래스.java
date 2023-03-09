@@ -1,4 +1,4 @@
-package CodeSmellList;
+package 코드스멜;
 
 class 커다란클래스 {
     double bmi(int tall, int kg){

@@ -1,4 +1,4 @@
-package CodeSmellList;
+package 코드스멜;
 
 class 너무많은매개변수 {
     void PlayerLank(int goals, int pass, int dribbles, int heading, int skill, int defense, int blocking){

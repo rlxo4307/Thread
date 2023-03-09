@@ -1,4 +1,4 @@
-package CodeSmellList;
+package 코드스멜;
 
 class 거부된유산 extends 커다란클래스{
      void notingWant(){

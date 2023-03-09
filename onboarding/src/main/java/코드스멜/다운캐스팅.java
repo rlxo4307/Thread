@@ -1,4 +1,4 @@
-package CodeSmellList;
+package 코드스멜;
 
 class 다운캐스팅 extends 커다란클래스{
     커다란클래스 hugeClass = new 커다란클래스();

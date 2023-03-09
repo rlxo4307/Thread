@@ -1,4 +1,4 @@
-package CodeSmellList;
+package 코드스멜;
 
 class 부적절한관계 {
     void health(){

@@ -1,4 +1,4 @@
-package CodeSmellList;
+package 코드스멜;
 
 class 리터럴의과도한사용 {
     final int gold = 1;

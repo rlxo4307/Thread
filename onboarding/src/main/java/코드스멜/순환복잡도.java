@@ -1,4 +1,4 @@
-package CodeSmellList;
+package 코드스멜;
 
 class 순환복잡도 {
     public static void main(String[] main){

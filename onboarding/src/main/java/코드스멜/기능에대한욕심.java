@@ -1,4 +1,4 @@
-package CodeSmellList;
+package 코드스멜;
 
 class 기능에대한욕심 {
     void myBmi(){

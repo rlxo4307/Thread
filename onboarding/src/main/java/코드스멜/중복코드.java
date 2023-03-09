@@ -1,6 +1,5 @@
-package CodeSmellList;
+package 코드스멜;
 
-import java.util.Scanner;
 class 중복코드 {
     void cat(int leg){
         System.out.println("고양이의 다리 갯수는:"+leg+"개 입니다.");

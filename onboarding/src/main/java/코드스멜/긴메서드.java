@@ -1,4 +1,4 @@
-package CodeSmellList;
+package 코드스멜;
 
 class 긴메서드 {
     void bmi(int tall, int kg){

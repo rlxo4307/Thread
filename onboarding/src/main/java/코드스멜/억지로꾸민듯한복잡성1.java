@@ -1,4 +1,4 @@
-package CodeSmellList;
+package 코드스멜;
 
 import java.util.Scanner;
 
