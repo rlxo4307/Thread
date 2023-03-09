@@ -1,11 +1,13 @@
 package 코드스멜;
 
+import java.util.Scanner;
+
 class 리터럴의과도한사용_sol {
-    private Player player;
-    public 리터럴의과도한사용_sol(Player player){
-        this.player = player;
+    private final Player player;
+    public 리터럴의과도한사용_sol(){
+        this.player = new Player();
     }
-    void medal(Player player){
+    void medal(){
         if(player.rank().equals("gold")) {
             System.out.println("금메달을 축하합니다.");
             return;
@@ -25,9 +27,11 @@ class 리터럴의과도한사용_sol {
 }
 
 class Player{
+    Scanner sc = new Scanner(System.in);
     private String medal;
-    public Player(String medal){
-        this.medal = medal;
+    public Player(){
+        System.out.print("획득한 메달의 색깔을 입력하세요. (없을 시, [none] 입력 : ");
+        this.medal = sc.nextLine();
     }
     public String rank(){
         return medal;
