@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CarList {
+    private List<String> list = new ArrayList<>();
     public CarList(){
-        List<String> list = new ArrayList<>();
-        list.add("Sonata");
-        list.add("Avante");
-        for(int i=1; i<=list.size(); i++){
-            System.out.println("차량 번호 "+i+"."+list.get(i-1));
+        this.list.add("Sonata");
+        this.list.add("Avante");
+        run();
+    }
+    void run(){
+        for(int i=1; i<=this.list.size(); i++){
+            System.out.println("차량 번호 "+i+"."+this.list.get(i-1));
         }
     }
 }

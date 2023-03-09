@@ -5,6 +5,7 @@ class BuyCar {
     private int num;
     Scanner sc = new Scanner(System.in);
     public BuyCar(){
+        new CarList();
         System.out.print("구매할 차량 번호를 입력하세요:");
         this.num = sc.nextInt();
         ment();
