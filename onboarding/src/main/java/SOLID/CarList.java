@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CarList {
-    private final List<String> list = new ArrayList<>();
+    private List<Car> list;
     public CarList(){
-        this.list.add("Sonata");
-        this.list.add("Avante");
-        run();
+        List<Car> list = new ArrayList<>();
+        this.list = list;
+        this.list.add(new Avante());
+        this.list.add(new Sonata());
     }
-    void run(){
-        for(int i=1; i<=this.list.size(); i++){
-            System.out.println("차량 번호 "+i+"."+this.list.get(i-1));
-        }
+    public List<Car> getList(){
+        return this.list;
     }
 }
+
 

@@ -1,10 +1,13 @@
 package SOLID;
 
 class Avante implements Car{
-    public Avante(){}
+    private String name = "Avante";
+    public Avante(){
+        toString();
+    }
     @Override
-    public void buy(){
-        System.out.println("Avante 구매해 주셔서 감사합니다.");
+    public String toString(){
+        return name;
     }
 
 }
