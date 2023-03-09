@@ -9,5 +9,4 @@ class Avante implements Car{
     public String getName(){
         return name;
     }
-
 }
