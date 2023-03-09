@@ -16,4 +16,3 @@ class MulRunnable implements Runnable{
     }
 
 }
-
