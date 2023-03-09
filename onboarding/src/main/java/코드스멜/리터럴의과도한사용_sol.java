@@ -33,3 +33,4 @@ class Player{
         return medal;
     }
 }
+
