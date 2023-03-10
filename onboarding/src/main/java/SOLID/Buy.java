@@ -16,7 +16,7 @@ class Buy {
         ment(sc.nextInt());
     }
 
-    public void ment(int carNumber){
+    private void ment(int carNumber){
         System.out.println(carList.get(carNumber-1)+"을(를) 구매해 주셔서 감사합니다.");
     }
 }
