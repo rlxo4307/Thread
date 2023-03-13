@@ -12,6 +12,7 @@ class Buy {
         for(int i=1; i<=carList.size(); i++){
             System.out.println("차량 번호 "+i+"."+carList.get(i-1));
         }
+
         System.out.print("구매할 차량 번호를 입력하세요:");
         ment(sc.nextInt());
     }
